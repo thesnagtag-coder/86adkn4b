@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SafeLife — New Home Move-In Audit · PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════ THEME ENGINE ═══════════ */
+:root {
+  --navy:#0D1B2A; --navy-mid:#1A2F45;
+  --critical:#DC2626; --high:#EA580C; --medium:#D97706; --low:#16A34A;
+  --radius:12px;
+  --shadow:0 2px 12px rgba(13,27,42,0.08);
+  --shadow-lg:0 8px 32px rgba(13,27,42,0.14);
+}
+body[data-theme="eucalyptus"] { --accent:#5E9C82; --accent-dark:#467562; --accent-rgb:94,156,130; }
+body[data-theme="periwinkle"] { --accent:#7680B5; --accent-dark:#596088; --accent-rgb:118,128,181; }
+body[data-theme="teal"]   { --accent:#14B8A6; --accent-dark:#0D9488; --accent-rgb:20,184,166; }
+body[data-theme="amber"]  { --accent:#F59E0B; --accent-dark:#D97706; --accent-rgb:245,158,11; }
+body[data-theme="rose"]   { --accent:#E11D48; --accent-dark:#BE123C; --accent-rgb:225,29,72; }
+body[data-theme="violet"] { --accent:#7C3AED; --accent-dark:#6D28D9; --accent-rgb:124,58,237; }
+body[data-theme="ocean"]  { --accent:#2563EB; --accent-dark:#1D4ED8; --accent-rgb:37,99,235; }
+body[data-theme="forest"] { --accent:#16A34A; --accent-dark:#15803D; --accent-rgb:22,163,74; }
+body[data-mode="light"] {
+  --bg:#F9F6F0; --surface:#FFFFFF; --surface-2:#EDE6D6; --tile:#F9F6F0;
+  --ink:#0D1B2A; --ink-mid:#3A4A5C; --ink-soft:#6B7A8D; --line:#EDE6D6;
+  --critical-bg:#FEF2F2; --high-bg:#FFF7ED; --medium-bg:#FFFBEB; --low-bg:#F0FDF4;
+}
+body[data-mode="dark"] {
+  --bg:#0B1420; --surface:#13202F; --surface-2:#1C2C3E; --tile:#0F1A28;
+  --ink:#EDF2F7; --ink-mid:#B7C4D1; --ink-soft:#8194A7; --line:#243549;
+  --critical-bg:rgba(220,38,38,.16); --high-bg:rgba(234,88,12,.16);
+  --medium-bg:rgba(217,119,6,.16); --low-bg:rgba(22,163,74,.16);
+  --shadow:0 2px 12px rgba(0,0,0,0.35); --shadow-lg:0 8px 32px rgba(0,0,0,0.5);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;}
+
+/* ═══════════ TOP BAR ═══════════ */
+.topbar{background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 20px;min-height:58px;position:relative;z-index:300;border-bottom:2px solid var(--accent);flex-wrap:wrap;}
+.topbar-brand{display:flex;align-items:center;gap:12px;}
+.topbar-logo{width:34px;height:34px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;font-family:'Sora',sans-serif;color:#fff;box-shadow:0 2px 8px rgba(var(--accent-rgb),.4);}
+.topbar-name{font-family:'Sora',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.3px;}
+.topbar-name span{color:var(--accent);}
+.topbar-tagline{font-size:11px;color:rgba(255,255,255,.5);font-style:italic;}
+.topbar-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.progress-pill{background:rgba(var(--accent-rgb),.15);border:1px solid rgba(var(--accent-rgb),.3);border-radius:20px;padding:4px 14px;font-size:12px;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.progress-pill span{color:#fff;font-size:13px;}
+.toolbar{display:flex;gap:6px;flex-wrap:wrap;}
+.tool-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:8px;padding:6px 10px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;display:flex;align-items:center;gap:5px;transition:all .2s;position:relative;}
+.tool-btn:hover{background:rgba(var(--accent-rgb),.3);border-color:var(--accent);}
+.tool-btn .tb-label{font-size:11px;}
+@media(max-width:820px){.tool-btn .tb-label{display:none;}.topbar-tagline{display:none;}}
+
+/* ═══════════ DROPDOWN PANELS ═══════════ */
+.dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-lg);padding:10px;display:none;z-index:400;min-width:190px;}
+.dropdown.open{display:block;}
+.dropdown-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--ink-soft);padding:4px 8px 8px;}
+.theme-row{display:flex;align-items:center;gap:10px;width:100%;padding:8px;border:none;background:none;border-radius:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--ink);text-align:left;}
+.theme-row:hover{background:rgba(var(--accent-rgb),.08);}
+.theme-row.selected{background:rgba(var(--accent-rgb),.12);}
+.theme-swatch{width:18px;height:18px;border-radius:6px;flex-shrink:0;}
+.theme-row .check-mark{margin-left:auto;color:var(--accent);font-weight:800;}
+
+/* ═══════════ HERO ═══════════ */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,#2A1B0E 100%);padding:48px 32px 40px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(var(--accent-rgb),.14) 0%,transparent 60%);}
+.hero-emoji{font-size:64px;line-height:1;margin-bottom:12px;display:block;position:relative;}
+.hero-title{font-family:'Sora',sans-serif;font-size:32px;font-weight:800;color:#fff;margin-bottom:6px;position:relative;}
+.hero-subtitle{font-size:15px;color:rgba(255,255,255,.65);margin-bottom:20px;position:relative;}
+.hero-badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;position:relative;}
+.hero-badge{background:rgba(var(--accent-rgb),.15);border:1px solid rgba(var(--accent-rgb),.35);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:5px;cursor:pointer;transition:background .2s,transform .15s;user-select:none;}
+.hero-badge:hover{background:rgba(var(--accent-rgb),.28);transform:translateY(-1px);}
+
+/* ═══════════ PROGRESS ═══════════ */
+.progress-section{background:var(--surface);border-bottom:1px solid var(--line);padding:0 32px;height:46px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:290;box-shadow:0 2px 8px rgba(13,27,42,.06);}
+.progress-label{font-size:12px;font-weight:600;color:var(--ink-soft);white-space:nowrap;}
+.progress-track{flex:1;height:8px;background:var(--surface-2);border-radius:4px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-dark));border-radius:4px;width:0%;transition:width .4s ease;}
+.progress-count{font-size:13px;font-weight:700;color:var(--accent);white-space:nowrap;}
+.celebrate{display:none;background:linear-gradient(135deg,rgba(var(--accent-rgb),.15),rgba(var(--accent-rgb),.05));border-bottom:1px solid rgba(var(--accent-rgb),.3);padding:14px 32px;text-align:center;font-weight:700;color:var(--accent-dark);font-size:15px;font-family:'Sora',sans-serif;}
+.celebrate.show{display:block;}
+
+/* ═══════════ SEARCH ═══════════ */
+.search-wrap{padding:20px 20px 0;max-width:860px;margin:0 auto;}
+.search-box{width:100%;padding:10px 16px 10px 40px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:14px;font-family:'Inter',sans-serif;color:var(--ink);outline:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7A8D' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:12px center;transition:border-color .2s;}
+.search-box:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(var(--accent-rgb),.1);}
+.search-no-results{text-align:center;padding:40px;color:var(--ink-soft);font-size:14px;display:none;}
+
+/* ═══════════ ZONE TABS ═══════════ */
+.zone-tabs{background:var(--surface);border-bottom:2px solid var(--line);display:flex;overflow-x:auto;padding:0 24px;gap:4px;scrollbar-width:none;position:sticky;top:46px;z-index:200;}
+.zone-tabs::-webkit-scrollbar{display:none;}
+.zone-tab{display:flex;align-items:center;gap:7px;padding:14px 18px;border:none;background:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--ink-soft);white-space:nowrap;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-2px;}
+.zone-tab:hover{color:var(--accent);background:rgba(var(--accent-rgb),.05);}
+.zone-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.zone-tab-count{background:var(--surface-2);border-radius:10px;padding:1px 7px;font-size:11px;font-weight:700;color:var(--ink-soft);}
+.zone-tab.active .zone-tab-count{background:rgba(var(--accent-rgb),.15);color:var(--accent);}
+
+/* ═══════════ MAIN / STATS ═══════════ */
+.main{max-width:860px;margin:0 auto;padding:28px 20px 60px;}
+.stats-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center;}
+.stat-pill{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;user-select:none;}
+.stat-pill:hover{border-color:var(--accent);}
+.stat-pill.filter-on{border-color:var(--accent);background:rgba(var(--accent-rgb),.08);box-shadow:0 0 0 2px rgba(var(--accent-rgb),.15);}
+.stat-dot{width:8px;height:8px;border-radius:50%;}
+.stat-dot.critical{background:var(--critical);}.stat-dot.high{background:var(--high);}.stat-dot.medium{background:var(--medium);}.stat-dot.low{background:var(--low);}
+.stat-count{font-size:15px;font-weight:700;}
+.risk-legend{display:flex;gap:12px;flex-wrap:wrap;margin-left:auto;}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--ink-soft);}
+.legend-dot{width:8px;height:8px;border-radius:3px;}
+
+/* ═══════════ ZONE PANEL ═══════════ */
+.zone-panel{display:none;}
+.zone-panel.active{display:block;}
+.zone-header{display:flex;align-items:center;gap:14px;margin-bottom:24px;padding:20px 24px;background:var(--surface);border-radius:var(--radius);border:1px solid rgba(var(--accent-rgb),.2);box-shadow:var(--shadow);}
+.zone-icon{width:52px;height:52px;background:linear-gradient(135deg,rgba(var(--accent-rgb),.12),rgba(var(--accent-rgb),.06));border:2px solid rgba(var(--accent-rgb),.25);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;}
+.zone-header-text h2{font-family:'Sora',sans-serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:3px;}
+.zone-header-text p{font-size:13px;color:var(--ink-soft);}
+
+/* ═══════════ CHECK CARDS ═══════════ */
+.checks-list{display:flex;flex-direction:column;gap:10px;}
+.check-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden;transition:box-shadow .2s;}
+.check-card:hover{box-shadow:var(--shadow-lg);}
+.check-card.completed{border-color:rgba(var(--accent-rgb),.3);background:rgba(var(--accent-rgb),.03);}
+.check-header{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;user-select:none;}
+.check-checkbox{width:22px;height:22px;min-width:22px;border:2px solid var(--surface-2);border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-size:13px;background:var(--surface);}
+.check-card.completed .check-checkbox{background:var(--accent);border-color:var(--accent);color:#fff;}
+.check-num{font-size:10px;font-weight:700;color:var(--ink-soft);min-width:30px;font-family:'Sora',sans-serif;}
+.check-risk{font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;}
+.risk-critical{background:var(--critical-bg);color:var(--critical);}
+.risk-high{background:var(--high-bg);color:var(--high);}
+.risk-medium{background:var(--medium-bg);color:var(--medium);}
+.risk-low{background:var(--low-bg);color:var(--low);}
+.check-title{flex:1;font-size:14px;font-weight:600;color:var(--ink);line-height:1.4;}
+.check-card.completed .check-title{color:var(--ink-soft);text-decoration:line-through;}
+.check-chevron{font-size:12px;color:var(--ink-soft);transition:transform .25s;min-width:16px;}
+.check-card.open .check-chevron{transform:rotate(180deg);}
+.check-detail{display:none;padding:0 18px 18px 18px;border-top:1px solid var(--line);}
+.check-card.open .check-detail{display:block;}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
+@media(max-width:600px){.detail-grid{grid-template-columns:1fr;}}
+.detail-item{background:var(--tile);border-radius:8px;padding:11px 13px;}
+.detail-item.full{grid-column:1/-1;}
+.detail-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--accent-dark);margin-bottom:4px;display:flex;align-items:center;gap:5px;}
+body[data-mode="dark"] .detail-label{color:var(--accent);}
+.detail-value{font-size:13px;color:var(--ink);line-height:1.55;}
+.tip-box{margin-top:12px;background:linear-gradient(135deg,rgba(var(--accent-rgb),.08),rgba(var(--accent-rgb),.04));border:1px solid rgba(var(--accent-rgb),.25);border-left:4px solid var(--accent);border-radius:8px;padding:11px 14px;display:flex;gap:10px;align-items:flex-start;}
+.tip-icon{font-size:16px;line-height:1;margin-top:1px;}
+.tip-text{font-size:13px;color:var(--ink);line-height:1.55;}
+.tip-text strong{color:var(--accent-dark);font-weight:700;}
+body[data-mode="dark"] .tip-text strong{color:var(--accent);}
+.measurement-box{margin-top:10px;background:rgba(var(--accent-rgb),.05);border:1px solid var(--line);border-radius:8px;padding:10px 13px;font-size:12px;color:var(--ink-mid);line-height:1.5;font-family:'Sora',sans-serif;}
+.measurement-box strong{color:var(--ink);font-size:11px;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:3px;}
+
+/* ═══════════ ZONE ACTIONS ═══════════ */
+.zone-actions{display:flex;justify-content:flex-end;gap:10px;margin:14px 0 18px;flex-wrap:wrap;}
+.btn{padding:9px 18px;border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;}
+.btn-outline{background:var(--surface);border:1px solid var(--line);color:var(--ink-mid);}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:#fff;box-shadow:0 2px 8px rgba(var(--accent-rgb),.3);}
+.btn-primary:hover{box-shadow:0 4px 16px rgba(var(--accent-rgb),.4);transform:translateY(-1px);}
+
+/* ═══════════ MODALS ═══════════ */
+.modal-overlay{position:fixed;inset:0;background:rgba(13,27,42,.6);z-index:500;display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;backdrop-filter:blur(3px);}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border-radius:16px;max-width:640px;width:100%;box-shadow:var(--shadow-lg);border-top:4px solid var(--accent);}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--line);}
+.modal-head h3{font-family:'Sora',sans-serif;font-size:18px;color:var(--ink);display:flex;align-items:center;gap:8px;}
+.modal-close{background:none;border:none;font-size:22px;color:var(--ink-soft);cursor:pointer;line-height:1;padding:4px;}
+.modal-close:hover{color:var(--accent);}
+.modal-body{padding:20px 24px 26px;color:var(--ink-mid);font-size:13.5px;}
+.modal-body h4{font-family:'Sora',sans-serif;font-size:14px;color:var(--ink);margin:16px 0 6px;display:flex;align-items:center;gap:6px;}
+.modal-body h4:first-child{margin-top:0;}
+.modal-body p{margin-bottom:8px;}
+.modal-body table{width:100%;border-collapse:collapse;font-size:12.5px;margin:8px 0;}
+.modal-body th{text-align:left;padding:7px 10px;background:rgba(var(--accent-rgb),.1);color:var(--ink);font-size:11px;text-transform:uppercase;letter-spacing:.5px;}
+.modal-body td{padding:7px 10px;border-bottom:1px solid var(--line);color:var(--ink-mid);}
+.modal-body td strong{color:var(--ink);}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;padding:0 24px 22px;flex-wrap:wrap;}
+.rule-list{list-style:none;margin:6px 0;}
+.rule-list li{padding:6px 0 6px 26px;position:relative;border-bottom:1px dashed var(--line);}
+.rule-list li::before{content:'✓';position:absolute;left:2px;color:var(--accent);font-weight:800;}
+
+/* ═══════════ COLLECTION / UPSELL ═══════════ */
+.collection{max-width:860px;margin:0 auto;padding:10px 20px 50px;}
+.collection h3{font-family:'Sora',sans-serif;font-size:18px;color:var(--ink);margin-bottom:4px;}
+.collection>p{font-size:13px;color:var(--ink-soft);margin-bottom:16px;}
+.collection-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;}
+.module-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:4px;transition:all .2s;}
+.module-card:hover{border-color:var(--accent);box-shadow:var(--shadow);}
+.module-card .m-emoji{font-size:26px;}
+.module-card .m-name{font-family:'Sora',sans-serif;font-weight:700;font-size:13.5px;color:var(--ink);}
+.module-card .m-age{font-size:11.5px;color:var(--ink-soft);}
+.module-tag{margin-top:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-radius:6px;padding:3px 8px;align-self:flex-start;}
+.module-tag.owned{background:rgba(var(--accent-rgb),.15);color:var(--accent-dark);}
+body[data-mode="dark"] .module-tag.owned{color:var(--accent);}
+.module-tag.addon{background:var(--surface-2);color:var(--ink-soft);}
+.module-tag.coming{background:transparent;color:var(--ink-soft);border:1px dashed var(--line);}
+
+/* ═══════════ FOOTER ═══════════ */
+.footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;padding:24px;font-size:12px;line-height:1.8;}
+.footer strong{color:rgba(255,255,255,.8);}
+
+/* ═══════════ TRADEMARK ICON SET ═══════════ */
+.zic svg{width:16px;height:16px;vertical-align:-3px;}
+.zone-tab .zic svg{color:inherit;}
+.topbar-logo svg{width:22px;height:22px;color:#fff;}
+.hero-emoji svg{width:72px;height:72px;color:var(--accent);filter:drop-shadow(0 4px 14px rgba(var(--accent-rgb),.45));}
+.zone-icon svg{width:27px;height:27px;color:var(--accent-dark);}
+body[data-mode="dark"] .zone-icon svg{color:var(--accent);}
+.module-card .m-emoji svg{width:30px;height:30px;color:var(--accent-dark);}
+body[data-mode="dark"] .module-card .m-emoji svg{color:var(--accent);}
+
+/* ═══════════ FLOATING NAV / DISCLAIMERS ═══════════ */
+html{scroll-behavior:smooth;}
+.float-nav{position:fixed;right:16px;bottom:20px;display:flex;flex-direction:column;gap:8px;z-index:250;}
+html[dir="rtl"] .float-nav{right:auto;left:16px;}
+.float-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--accent-dark);font-size:18px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-lg);transition:all .2s;}
+.float-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent);transform:translateY(-2px);}
+body[data-mode="dark"] .float-btn{color:var(--accent);}
+.zone-disclaimer{margin-top:18px;padding:10px 14px;border:1px dashed var(--line);border-radius:8px;font-size:11.5px;color:var(--ink-soft);text-align:center;}
+.print-disclaimer{display:none;}
+
+/* ═══════════ PRINT ═══════════ */
+#cheat-print{display:none;}
+@media print{
+  body{background:#fff !important;color:#000;font-size:11px;margin:0 !important;padding:0 !important;}
+  .topbar,.hero,.search-wrap,.zone-tabs,.progress-section,.zone-actions,.stats-bar,.collection,.modal-overlay,.celebrate,.dropdown{display:none !important;}
+  .main{max-width:100%;padding:0 0 30px;}
+  .check-card{box-shadow:none;border:1px solid #ccc;page-break-inside:avoid;margin-bottom:6px;}
+  .check-detail{display:block !important;border-top:1px solid #ddd;}
+  .check-chevron{display:none;}
+  .zone-panel{display:block !important;page-break-before:auto;}
+  .zone-header{box-shadow:none;border:1px solid #ccc;margin-top:14px;}
+  body.print-zone .zone-panel{display:none !important;}
+  body.print-zone .zone-panel.active{display:block !important;}
+  body.print-cheat .main,body.print-cheat .footer,body.print-cheat .zone-panel,body.print-cheat .print-disclaimer{display:none !important;}
+  body.print-cheat #cheat-print{display:block !important;}
+  #cheat-print{margin:0;padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .cp-card{border:2.5px solid #0D1B2A;border-radius:16px;overflow:hidden;font-family:'Inter',sans-serif;color:#0D1B2A;height:272mm;display:flex;flex-direction:column;page-break-inside:avoid;page-break-after:avoid;}
+  .cp-head{background:#0D1B2A !important;color:#fff;display:flex;align-items:center;gap:12px;padding:13px 22px;}
+  .cp-head svg{width:38px;height:38px;color:var(--accent);}
+  .cp-title{font-family:'Sora',sans-serif;font-size:20px;font-weight:800;line-height:1.2;}
+  .cp-title em{color:var(--accent);font-style:normal;}
+  .cp-sub{font-size:11.5px;color:rgba(255,255,255,.78);margin-top:2px;}
+  .cp-tag{margin-left:auto;font-size:10px;font-style:italic;color:rgba(255,255,255,.65);text-align:right;}
+  .cp-contacts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:11px 22px;background:rgba(var(--accent-rgb),.09) !important;}
+  .cp-chip{border:1.2px solid rgba(var(--accent-rgb),.55);border-radius:8px;padding:5px 9px;background:#fff !important;}
+  .cp-chip b{display:block;font-size:8.5px;text-transform:uppercase;letter-spacing:.3px;color:var(--accent-dark);}
+  .cp-chip span{font-size:12px;font-weight:700;}
+  .cp-cols{display:flex;gap:20px;padding:13px 22px 6px;flex:1;min-height:0;overflow:hidden;}
+  .cp-cols h3{font-family:'Sora',sans-serif;font-size:13px;border-bottom:2px solid var(--accent);padding-bottom:3px;margin:0 0 8px;}
+  .cp-rules{flex:1.15;}
+  .cp-rules ul{list-style:none;margin:0;padding:0;}
+  .cp-rules li{font-size:11px;line-height:1.5;padding:4px 0 4px 18px;position:relative;border-bottom:1px dashed #ddd;}
+  .cp-rules li::before{content:'✓';position:absolute;left:0;color:var(--accent-dark);font-weight:800;}
+  html[dir="rtl"] .cp-rules li{padding:4px 18px 4px 0;}
+  html[dir="rtl"] .cp-rules li::before{left:auto;right:0;}
+  .cp-numsec{flex:1;}
+  .cp-numsec table{width:100%;border-collapse:collapse;font-size:10.5px;}
+  .cp-numsec td{border-bottom:1px solid #eee;padding:4px 5px;vertical-align:top;}
+  .cp-numsec td strong{color:#0D1B2A;}
+  .cp-notes{margin:6px 22px 10px;border:1.5px dashed var(--accent);border-radius:10px;padding:8px 13px;font-size:11px;white-space:pre-wrap;max-height:34mm;overflow:hidden;}
+  .cp-notes b{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:var(--accent-dark);display:block;margin-bottom:2px;}
+  .cp-foot{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#0D1B2A !important;color:rgba(255,255,255,.85);padding:9px 22px;font-size:10px;line-height:1.55;margin-top:auto;}
+  .cp-foot b{color:var(--accent);}
+  .cp-qr{display:flex;align-items:center;gap:10px;text-align:right;}
+  .cp-qr img{width:68px;height:68px;background:#fff;border-radius:8px;padding:3px;}
+  .cp-qr .qr-ph{width:68px;height:68px;border:1.5px dashed rgba(255,255,255,.5);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:8.5px;text-align:center;color:rgba(255,255,255,.6);padding:4px;}
+  .footer{background:#fff;color:#555;}
+  .footer strong{color:#000;}
+  .float-nav{display:none !important;}
+  .print-disclaimer{display:block !important;position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:8.5px;color:#666;border-top:1px solid #ccc;padding:3px 0;background:#fff;}
+  @page{size:A4;margin:10mm 10mm 12mm;}
+}
+</style>
+</head>
+<body data-theme="eucalyptus" data-mode="light">
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-logo" id="logo-icon">S</div>
+    <div>
+      <div class="topbar-name">Safe<span>Life</span></div>
+      <div class="topbar-tagline">To all moms by a mom · NEBOSH &amp; OSHA Professional</div>
+    </div>
+  </div>
+  <div class="topbar-meta">
+    <div class="toolbar">
+      <button class="tool-btn" id="btn-search" title="Search all checks">🔍</button>
+      <button class="tool-btn" id="btn-manual" title="User Manual">📖<span class="tb-label" data-i18n="manual">Manual</span></button>
+      <button class="tool-btn" id="btn-cheat" title="Emergency Cheat Sheet">🚨<span class="tb-label" data-i18n="cheat">Cheat Sheet</span></button>
+      <button class="tool-btn" id="btn-print" title="Print / Save as PDF">🖨️<span class="tb-label" data-i18n="printPdf">Print / PDF</span></button>
+      <button class="tool-btn" id="btn-save" title="Save progress to file">💾<span class="tb-label" data-i18n="save">Save</span></button>
+      <button class="tool-btn" id="btn-load" title="Load saved progress">📂<span class="tb-label" data-i18n="load">Load</span></button>
+      <button class="tool-btn" id="btn-lang" title="Language" style="display:none">🌐<span class="tb-label" id="lang-label">EN</span>
+        <div class="dropdown" id="dd-lang"></div>
+      </button>
+      <button class="tool-btn" id="btn-theme" title="Colour theme">🎨<span class="tb-label" data-i18n="theme">Theme</span>
+        <div class="dropdown" id="dd-theme"></div>
+      </button>
+      <button class="tool-btn" id="btn-mode" title="Light / dark mode">🌙</button>
+    </div>
+    <div class="progress-pill"><span id="topbar-done">0</span>&nbsp;/ 84 <span data-i18n="checksDone" style="color:inherit;font-size:12px;">checks done</span></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-emoji" id="hero-icon">🏠</span>
+  <div class="hero-title" data-i18n="heroTitle">New Home Move-In Audit</div>
+  <div class="hero-subtitle" data-i18n="heroSub">84 practical safety checks across 6 zones · Helping families build safe, confident habits from day one in their new home — owned or rented</div>
+  <div class="hero-badges">
+    <div class="hero-badge" data-zone="1"><span class="zic" data-zi="z1"></span> <span data-i18n="bz1">Safety Systems</span></div>
+    <div class="hero-badge" data-zone="2"><span class="zic" data-zi="z2"></span> <span data-i18n="bz2">Structural &amp; Environmental</span></div>
+    <div class="hero-badge" data-zone="3"><span class="zic" data-zi="z3"></span> <span data-i18n="bz3">Utilities &amp; Electrical</span></div>
+    <div class="hero-badge" data-zone="4"><span class="zic" data-zi="z4"></span> <span data-i18n="bz4">Security &amp; Access</span></div>
+    <div class="hero-badge" data-zone="5"><span class="zic" data-zi="z5"></span> <span data-i18n="bz5">Room-by-Room Setup</span></div>
+    <div class="hero-badge" data-zone="6"><span class="zic" data-zi="z6"></span> <span data-i18n="bz6">Move-In Record &amp; Rental</span></div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-section">
+  <div class="progress-label" data-i18n="overallProgress">Overall Progress</div>
+  <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="progress-count" id="progress-count">0 of 84</div>
+</div>
+<div class="celebrate" id="celebrate">🎉 <span data-i18n="celebrate">All 84 checks complete — you've built strong, confident safety habits for your new home right from the start. Print your checklist as a keepsake of your move-in day.</span></div>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <input class="search-box" type="text" id="search-input" placeholder="Search checks… e.g. smoke alarm, gas shutoff, lock rekey, stair gate, mould, landlord, insurance…">
+</div>
+
+<!-- ZONE TABS -->
+<div class="zone-tabs" id="zone-tabs">
+  <button class="zone-tab active" data-zone="1"><span class="zic" data-zi="z1"></span> <span data-i18n="z1">Whole-Home Safety Systems Check</span> <span class="zone-tab-count" id="ztc-1">0/14</span></button>
+  <button class="zone-tab" data-zone="2"><span class="zic" data-zi="z2"></span> <span data-i18n="z2">Structural &amp; Environmental Hazards</span> <span class="zone-tab-count" id="ztc-2">0/14</span></button>
+  <button class="zone-tab" data-zone="3"><span class="zic" data-zi="z3"></span> <span data-i18n="z3">Utilities, Water &amp; Electrical Safety</span> <span class="zone-tab-count" id="ztc-3">0/14</span></button>
+  <button class="zone-tab" data-zone="4"><span class="zic" data-zi="z4"></span> <span data-i18n="z4">Security &amp; Access Safety</span> <span class="zone-tab-count" id="ztc-4">0/14</span></button>
+  <button class="zone-tab" data-zone="5"><span class="zic" data-zi="z5"></span> <span data-i18n="z5">Room-by-Room Family Safety Setup</span> <span class="zone-tab-count" id="ztc-5">0/14</span></button>
+  <button class="zone-tab" data-zone="6"><span class="zic" data-zi="z6"></span> <span data-i18n="z6">Documentation, Move-In Record &amp; Rental Considerations</span> <span class="zone-tab-count" id="ztc-6">0/14</span></button>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="main-content">
+  <div class="stats-bar" id="stats-bar">
+    <div class="stat-pill" data-risk="critical"><span class="stat-dot critical"></span><span class="stat-count" id="s-critical">0</span> <span data-i18n="critical">Critical</span></div>
+    <div class="stat-pill" data-risk="high"><span class="stat-dot high"></span><span class="stat-count" id="s-high">0</span> <span data-i18n="high">High</span></div>
+    <div class="stat-pill" data-risk="medium"><span class="stat-dot medium"></span><span class="stat-count" id="s-medium">0</span> <span data-i18n="medium">Medium</span></div>
+    <div class="stat-pill" data-risk="low"><span class="stat-dot low"></span><span class="stat-count" id="s-low">0</span> <span data-i18n="low">Low</span></div>
+    <div class="risk-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--critical)"></div><span data-i18n="legendCritical">Critical = immediate action</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--high)"></div><span data-i18n="legendHigh">High = urgent attention</span></div>
+    </div>
+  </div>
+  <div id="search-no-results" class="search-no-results"><span data-i18n="noResults">No checks match your search. Try different keywords.</span><br><span data-i18n="notCovered" style="font-size:12.5px;"></span></div>
+</div>
+
+<!-- COLLECTION -->
+<div class="collection">
+  <h3 data-i18n="collTitle">The SafeLife Collection</h3>
+  <p data-i18n="collSub">One safety system for every stage of life. Add more modules any time — each works exactly like this one.</p>
+  <div class="collection-grid" id="collection-grid"></div>
+</div>
+
+<!-- SITUATION MODULES -->
+<div class="collection" style="padding-top:0;">
+  <h3>Situation Modules</h3>
+  <p>Real-life situations and conditions — each its own complete, standalone 84-check system. Available separately as they launch.</p>
+  <div class="collection-grid" id="situation-grid"></div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <strong>SafeLife</strong> · New Home Move-In Audit Module · PRO Edition<br>
+  Created by a NEBOSH &amp; OSHA trained HSE professional · "To all moms by a mom"<br>
+  Evidence base: smoke and carbon monoxide alarm standards such as EN 14604 and BS EN 50291 or regional equivalents · WHO guidance on damp, mould and indoor radon · general public health guidance on lead paint and asbestos-era building materials in older housing<br>
+  <span style="color:rgba(255,255,255,.35);" data-i18n="disclaimer">This checklist is educational general home safety guidance to help families build safe habits when moving into a new home, whether owned or rented. It is not a professional structural, electrical, gas, or legal inspection. If you have concerns about your new home's structure, wiring, gas systems, or a specific tenancy question, please consult a qualified professional or your local regulations.</span>
+</footer>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-manual">
+  <div class="modal">
+    <div class="modal-head"><h3>📖 <span data-i18n="manualTitle">User Manual</span></h3><button class="modal-close" data-close="modal-manual">✕</button></div>
+    <div class="modal-body" id="manual-body"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-cheat">
+  <div class="modal">
+    <div class="modal-head"><h3>🚨 <span data-i18n="cheatTitle">Emergency Cheat Sheet</span></h3><button class="modal-close" data-close="modal-cheat">✕</button></div>
+    <div class="modal-body" id="cheat-body"></div>
+    <div class="modal-actions"><button class="btn btn-outline" id="btn-seller" title="Seller: set this product's QR code" style="margin-right:auto;">⚙</button><button class="btn btn-primary" id="btn-print-cheat" data-i18n="printCheat">🖨️ Print cheat sheet</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-seller">
+  <div class="modal">
+    <div class="modal-head"><h3>⚙ Seller Settings</h3><button class="modal-close" data-close="modal-seller">✕</button></div>
+    <div class="modal-body" id="seller-body"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-print">
+  <div class="modal">
+    <div class="modal-head"><h3>🖨️ <span data-i18n="printTitle">Print or Save as PDF</span></h3><button class="modal-close" data-close="modal-print">✕</button></div>
+    <div class="modal-body">
+      <p data-i18n="printHint">Choose what to print. To save as a PDF instead of printing on paper, choose "Save as PDF" as the printer in the print dialog.</p>
+      <p style="font-size:12.5px;color:var(--ink-soft);margin-top:6px;" data-i18n="printNote">All checks are automatically expanded to full detail when printing — no need to open them first.</p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" id="print-zone" data-i18n="printZone">Current zone only</button>
+      <button class="btn btn-outline" id="print-cheat2" data-i18n="printCheat2">Cheat sheet</button>
+      <button class="btn btn-primary" id="print-all" data-i18n="printAll">Full checklist (all 84)</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="load-file" accept=".json" style="display:none">
+
+<!-- FLOATING CHECK NAVIGATION -->
+<div class="float-nav">
+  <button class="float-btn" id="fn-top" title="Back to top">⤒</button>
+  <button class="float-btn" id="fn-prev" title="Previous check">↑</button>
+  <button class="float-btn" id="fn-next" title="Next check">↓</button>
+</div>
+
+<!-- PRINT PAGE DISCLAIMER (repeats on every printed page) -->
+<div class="print-disclaimer" data-i18n="disclaimer">This checklist is educational general home safety guidance to help families build safe habits when moving into a new home, whether owned or rented. It is not a professional structural, electrical, gas, or legal inspection. If you have concerns about your new home's structure, wiring, gas systems, or a specific tenancy question, please consult a qualified professional or your local regulations.</div>
+
+<div id="cheat-print"></div>
+
+<script>
+// ═══════════════════════════════════════════
+// SELLER BRANDING — edit these three lines to make it yours
+// ═══════════════════════════════════════════
+const BRAND_NAME = 'The Snag Tag';
+const STORE_URL  = '';   // e.g. 'thesnagtag.gumroad.com' — printed under the QR code on the cheat sheet
+const QR_IMAGE   = '';   // paste your QR code as a data URL: 'data:image/png;base64,...'
+
+// ═══════════════════════════════════════════
+// I18N — interface language pack (English-only release; check content in English, verified guidance)
+// ═══════════════════════════════════════════
+const I18N = {
+en:{name:'English',manual:'Manual',cheat:'Cheat Sheet',printPdf:'Print / PDF',save:'Save',load:'Load',theme:'Theme',checksDone:'checks done',heroTitle:'New Home Move-In Audit',heroSub:'84 practical safety checks across 6 zones · Helping families build safe, confident habits from day one in their new home — owned or rented',bz1:'Safety Systems',bz2:'Structural &amp; Environmental',bz3:'Utilities &amp; Electrical',bz4:'Security &amp; Access',bz5:'Room-by-Room Setup',bz6:'Move-In Record &amp; Rental',overallProgress:'Overall Progress',ofWord:'of',z1:'Whole-Home Safety Systems Check',z2:'Structural &amp; Environmental Hazards',z3:'Utilities, Water &amp; Electrical Safety',z4:'Security &amp; Access Safety',z5:'Room-by-Room Family Safety Setup',z6:'Documentation, Move-In Record &amp; Rental Considerations',zd1:'14 checks: smoke and carbon monoxide alarm placement and testing, fire extinguisher access, emergency exit routes, electrical panel and shutoff locations, and a fire escape plan built for your new layout.',zd2:'14 checks: checking for prior water damage, damp and mould, general public-health awareness of lead paint and asbestos-era materials in older homes, radon awareness, pest entry signs, and staircase and railing condition.',zd3:'14 checks: outlet testing including GFCI/RCD-equivalent protection near water, water heater temperature, water quality, ventilation and extractor fans, and basic appliance and wiring safety checks.',zd4:'14 checks: rekeying locks on move-in, window lock function, garage and outdoor access points, exterior lighting, and garden and yard hazards such as pools, sheds and tools.',zd5:'14 checks: adapting childproofing to the new floor plan, stair gates, balcony and railing gaps, window fall-prevention, and furniture and appliance anchoring for the new space.',zd6:'14 checks: a photographic and written move-in record, understanding how safety-maintenance responsibilities are typically split between tenants and landlords, reviewing insurance, and recording emergency provider details. Rental and tenancy law varies by location — this section is general safety guidance, not legal advice; for a specific tenant or landlord question, consult your local regulations or a qualified professional.',critical:'Critical',high:'High',medium:'Medium',low:'Low',legendCritical:'Critical = immediate action',legendHigh:'High = urgent attention',noResults:'No checks match your search. Try different keywords.',searchPh:'Search checks… e.g. smoke alarm, gas shutoff, lock rekey, stair gate, mould, landlord, insurance…',who:'Who',what:'What',where:'Where',why:'Why',how:'How',standards:'Standards &amp; Measurements',example:'Real-World Example',quickTip:'Quick Win',markAll:'Mark All Complete',unmarkAll:'Unmark All',expandAll:'Expand All',collapseAll:'Collapse All',celebrate:'All 84 checks complete — you\'ve built strong, confident safety habits for your new home right from the start. Print your checklist as a keepsake of your move-in day.',collTitle:'The SafeLife Collection',collSub:'One safety system for every stage of life. Every module below is a complete, standalone 84-check system — available separately, or as the full bundle.',owned:'✓ Current Module',addon:'Available Separately',disclaimer:'This checklist is educational general home safety guidance to help families build safe habits when moving into a new home, whether owned or rented. It is not a professional structural, electrical, gas, or legal inspection. If you have concerns about your new home\'s structure, wiring, gas systems, or a specific tenancy question, please consult a qualified professional or your local regulations.',manualTitle:'User Manual',cheatTitle:'Emergency Cheat Sheet',printTitle:'Print or Save as PDF',printHint:'Choose what to print. To save as a PDF instead of printing on paper, choose "Save as PDF" as the printer in the print dialog.',printZone:'Current zone only',printCheat2:'Cheat sheet',printAll:'Full checklist (all 84)',printCheat:'🖨️ Print cheat sheet',langNote:'Safety check content is written in English (verified international guidance). Interface labels switch language.',saved:'Progress saved',loaded:'Progress loaded',cheatContacts:'My emergency contacts',cheatHint:'Make it yours: edit any name or number, add or delete rows. Everything saves automatically on this device and prints on your cheat sheet.',addContact:'+ Add contact',myNotes:'My notes',notesPh:'Landlord or property manager details, utility account numbers, locksmith, insurer, key move-in dates, shutoff locations, useful notes…',rules:'The 10 golden rules',keyNums:'Key measurements at a glance',delRow:'Remove',notCovered:'Topic not covered in this module? Check the cheat sheet, ask a qualified professional, or request it via your SafeLife store page — new checks arrive in free updates.',printNote:'All checks are automatically expanded to full detail when printing — no need to open them first.',mn1:'Newborn',mn2:'Infant',mn3:'Toddler',mn4:'Preschooler',mn5:'School-Age',mn6:'Teenager',mn7:'Young Adult',mn8:'Adult',mn9:'Middle-Aged Adult',mn10:'Active Seniors',mn11:'Advanced Age',mn12:'90+ and Longevity',
+manualBody:'<h4>🚀 Getting started</h4><p>84 checks in 6 zones. Tap any check to see Who / What / Where / Why / How, exact measurements and standards, a real-world example and a quick-win tip.</p><h4>✅ Progress</h4><p>Tick the box to complete a check — bars and counters update instantly. Each zone has Mark All / Unmark All and Expand / Collapse All buttons, and the floating ↑ ↓ arrows jump between checks.</p><h4>🔍 Search &amp; filters</h4><p>The search box filters all 84 checks live across every zone. Tap a risk pill (Critical / High / Medium / Low) to filter by risk level; tap again to clear.</p><h4>🎨 Personalise</h4><p>Pick a colour theme and light or dark mode — remembered on this device. Make the cheat sheet yours: add your own emergency numbers and notes.</p><h4>🏠 A note on moving in</h4><p>Moving into a new home — owned or rented — is an exciting fresh start, and this checklist exists to help your family build good safety habits from day one, not to make you anxious about your new home. Work through the zones at your own pace during the first weeks. Zone 6 also includes general guidance for renters on how safety-maintenance responsibility is commonly split between tenants and landlords — this is general information only, not legal advice, since rental law varies by location.</p><h4>💾 Save &amp; 🖨️ Print</h4><p>Progress saves automatically on this device as you go. To move your progress to another device or keep a backup, tap 💾 Save — this downloads a small file. On the new device (or after clearing your browser), open the same checklist, tap 📂 Load, and choose that file to restore your progress exactly where you left off. Keep the file somewhere safe, like your email or a notes app. Print the full checklist, one zone, or your personalised cheat sheet — all checks expand automatically when printing. Choose "Save as PDF" in the print dialog to create a PDF.</p>'}
+};
+
+// ═══════════════════════════════════════════
+// TRADEMARK ICON SET — same outline family as the whole collection
+// ═══════════════════════════════════════════
+const _svg = inner => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">' + inner + '</svg>';
+const _newhomeIcon = '<path d="M4 11.5l8-7 8 7"/><path d="M6 10.5V20a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-9.5"/><path d="M9.5 14.5l1.8 1.8L15 12.5"/>';
+const ICONS = {
+  stage: _svg('<path d="M2.3 8.6c1.7-2.7 4.2-4.1 6.2-4.1s4.5 1.4 6.2 4.1c-1.7 2.7-4.2 4.1-6.2 4.1S4 11.3 2.3 8.6z"/><circle cx="8.5" cy="8.6" r="1.8"/><path d="M14.5 14.6q1.8 1.8 0 3.8M16.7 12.4q3.6 3.6 0 8.2M18.9 10.2q5.4 5.4 0 12.6"/><circle cx="13" cy="16.6" r="1" fill="currentColor" stroke="none"/>'),
+  newhome: _svg(_newhomeIcon),
+  z1: _svg('<path d="M12 3.5c-3 0-4.6 2.4-4.6 5.4v3.2l-1.6 2.6h12.4l-1.6-2.6V8.9c0-3-1.6-5.4-4.6-5.4z"/><path d="M9.6 17.5a2.4 2.4 0 0 0 4.8 0"/><circle cx="12" cy="2.6" r="0.9" fill="currentColor" stroke="none"/>'),
+  z2: _svg('<path d="M4 12.5L11 6.5l7 6"/><path d="M6 11v8.5h7V11"/><circle cx="16.8" cy="16.2" r="3.1"/><path d="M19 18.4L21 20.5"/>'),
+  z3: _svg('<path d="M13 2.5L6 13h5l-1 8.5 8-12h-5z"/>'),
+  z4: _svg('<rect x="5.5" y="3" width="11" height="18" rx="1.4"/><circle cx="13.5" cy="12" r="1" fill="currentColor" stroke="none"/><path d="M18.7 9.2a2.4 2.4 0 1 1 -2.2 2.6"/>'),
+  z5: _svg('<path d="M4 20h3v-4h3v-4h3v-4h3v-4h3"/><path d="M4 20v-3.5"/>'),
+  z6: _svg('<rect x="5" y="4.5" width="14" height="17" rx="2"/><path d="M9 4.5V3.3A1.3 1.3 0 0 1 10.3 2h3.4A1.3 1.3 0 0 1 15 3.3v1.2"/><path d="M8.5 11l2 2 4-4M8.5 16.5h7"/>'),
+  stages: [
+    _svg('<circle cx="12" cy="13" r="6.5"/><path d="M12 6.5c0-1.8.8-2.7 2.3-3"/><circle cx="9.7" cy="12.2" r="0.65" fill="currentColor" stroke="none"/><circle cx="14.3" cy="12.2" r="0.65" fill="currentColor" stroke="none"/><path d="M9.9 15c1.4 1.2 2.8 1.2 4.2 0"/>'),
+    _svg('<circle cx="12" cy="7" r="3.2"/><path d="M6.8 20.5v-3.2a5.2 5.2 0 0 1 10.4 0v3.2"/>'),
+    _svg('<path d="M12 3.5l2.5 5.2 5.7.8-4.1 4 1 5.7-5.1-2.7-5.1 2.7 1-5.7-4.1-4 5.7-.8z"/>'),
+    _svg('<rect x="6.5" y="8" width="11" height="12" rx="3"/><path d="M9.5 8V6.2a2.5 2.5 0 0 1 5 0V8"/><rect x="9.7" y="13" width="4.6" height="4" rx="1"/><path d="M6.5 11.5h11"/>'),
+    _svg('<path d="M5 15v-1.5a7 7 0 0 1 14 0V15"/><rect x="4" y="14" width="3.4" height="6" rx="1.6"/><rect x="16.6" y="14" width="3.4" height="6" rx="1.6"/>'),
+    _svg('<path d="M12 4.5L2.8 9l9.2 4.5L21.2 9z"/><path d="M6.8 11.5v3.8c0 1.6 10.4 1.6 10.4 0v-3.8"/><path d="M21.2 9v5"/>'),
+    _svg('<rect x="3.8" y="8" width="16.4" height="11.2" rx="2"/><path d="M9.5 8V6.6A1.6 1.6 0 0 1 11.1 5h1.8a1.6 1.6 0 0 1 1.6 1.6V8M3.8 12.8h16.4"/>'),
+    _svg('<path d="M8.5 9.5v-4c2.3 1.8 4.7 1.8 7 0v4a3.5 3.5 0 0 1-7 0z"/><path d="M12 13v8M12 18c-1.8-.4-3-1.4-3.6-3"/>'),
+    _svg('<circle cx="8.5" cy="5" r="2.1"/><path d="M8.5 7.1c-1.2.4-2 1.5-2 2.8v1.8"/><path d="M8.7 9.6c3.4 0 5.8 2.5 5.8 5.7 0 2.2-1.2 3.9-3 4.9"/><path d="M6.5 11.7v3.4c0 2.2 1 3.9 2.7 5"/>'),
+    _svg('<circle cx="12" cy="5.8" r="2.3"/><path d="M8.2 17.3a3.8 3.8 0 0 1 7.6 0v1.2"/><path d="M6.6 20.5h10.8"/><path d="M8.6 20.5v-3.2M15.4 20.5v-3.2"/><path d="M12 13.4c-.9-.8-1.5-1.3-1.5-1.9a.85.85 0 0 1 1.5-.55.85.85 0 0 1 1.5.55c0 .6-.6 1.1-1.5 1.9z"/>'),
+    _svg('<circle cx="7" cy="5.3" r="2.2"/><path d="M4 19v-3.4a3.4 3.4 0 0 1 3.4-3.4h.6a3.4 3.4 0 0 1 2.6 1.2l1 1.2"/><circle cx="17" cy="9.4" r="1.7"/><path d="M13.9 19v-2.4a2.6 2.6 0 0 1 2.6-2.6h1a2.6 2.6 0 0 1 2.6 2.6V19"/><path d="M9.5 15.3l2.7 1.4"/>'),
+    _svg('<path d="M6.4 8.1c-2.2 0-4 1.8-4 3.9s1.8 3.9 4 3.9c3.4 0 5.2-2.5 5.7-3.9.5-1.4 2.3-3.9 5.7-3.9 2.2 0 4 1.8 4 3.9s-1.8 3.9-4 3.9c-3.4 0-5.2-2.5-5.7-3.9-.5-1.4-2.3-3.9-5.6-3.9z"/>'),
+    _svg('<path d="M8.5 8.2V6.6a3.5 3.5 0 0 1 7 0v1.6"/><rect x="4.3" y="8.2" width="15.4" height="11.8" rx="3.6"/><path d="M4.3 13.2h15.4"/><rect x="10.4" y="10.6" width="3.2" height="2" rx="0.5"/>'),
+    _svg('<circle cx="7.8" cy="12" r="5.3"/><circle cx="16.2" cy="12" r="5.3"/><circle cx="6.3" cy="11.2" r="0.6" fill="currentColor" stroke="none"/><circle cx="9.3" cy="11.2" r="0.6" fill="currentColor" stroke="none"/><circle cx="14.7" cy="11.2" r="0.6" fill="currentColor" stroke="none"/><circle cx="17.7" cy="11.2" r="0.6" fill="currentColor" stroke="none"/><path d="M6.5 13.8c.9.7 1.8.7 2.7 0M14.9 13.8c.9.7 1.8.7 2.7 0"/>'),
+    _svg('<rect x="6" y="4.6" width="12" height="16.4" rx="2.2"/><path d="M9.4 4.6V3.7A1.7 1.7 0 0 1 11.1 2h1.8a1.7 1.7 0 0 1 1.7 1.7v.9"/><path d="M9 13.2l2.2 2.2L15.5 11"/>'),
+    _svg('<path d="M4 11.5l8-6.8 8 6.8"/><path d="M6.2 10.2V19a1 1 0 0 0 1 1h9.6a1 1 0 0 0 1-1v-8.8"/><path d="M9.4 19v-4.6h5.2V19"/><path d="M9 13l2.2 1.6 3.4-3"/>'),
+    _svg('<path d="M12 3v18"/><path d="M8 5h8"/><path d="M9.6 13h4.8"/>'),
+    _svg('<rect x="5" y="9.6" width="14" height="4.8" rx="2.4" transform="rotate(-38 12 12)"/><path d="M12 9.6v4.8" transform="rotate(-38 12 12)"/>'),
+    _svg('<circle cx="8.3" cy="15.5" r="5.1"/><circle cx="8.3" cy="15.5" r="0.9" fill="currentColor" stroke="none"/><path d="M8.3 15.5h7l2.7 3.6"/><path d="M8.3 10.6h4.8l1.7 4.9h3.5"/><circle cx="7.6" cy="5.6" r="1.7"/><path d="M7.6 7.3v2.2"/><circle cx="18.7" cy="19.3" r="1.3"/>'),
+    _svg('<path d="M2.3 8.6c1.7-2.7 4.2-4.1 6.2-4.1s4.5 1.4 6.2 4.1c-1.7 2.7-4.2 4.1-6.2 4.1S4 11.3 2.3 8.6z"/><circle cx="8.5" cy="8.6" r="1.8"/><path d="M14.5 14.6q1.8 1.8 0 3.8M16.7 12.4q3.6 3.6 0 8.2M18.9 10.2q5.4 5.4 0 12.6"/><circle cx="13" cy="16.6" r="1" fill="currentColor" stroke="none"/>'),
+    _svg('<path d="M12 19.4c-2.7-1.9-4.7-3.5-4.7-5.5a2.6 2.6 0 0 1 4.7-1.6 2.6 2.6 0 0 1 4.7 1.6c0 2-2 3.6-4.7 5.5z"/><circle cx="7.4" cy="8.2" r="1.6"/><circle cx="10.3" cy="5.6" r="1.6"/><circle cx="13.7" cy="5.6" r="1.6"/><circle cx="16.6" cy="8.2" r="1.6"/>'),
+    _svg(_newhomeIcon)
+  ]
+};
+function injectIcons(){
+  document.getElementById('logo-icon').innerHTML = ICONS.stage;
+  document.getElementById('hero-icon').innerHTML = ICONS.newhome;
+  document.querySelectorAll('.zic[data-zi]').forEach(el=>{ el.innerHTML = ICONS[el.dataset.zi] || ''; });
+}
+// ═══════════════════════════════════════════
+// ALL 84 CHECKS — NEW HOME MOVE-IN AUDIT
+// ═══════════════════════════════════════════
+const ZONES = [
+  {
+    id: 1, name: 'Whole-Home Safety Systems Check', icon: '🔔',
+    desc: '14 checks: smoke and carbon monoxide alarm placement and testing, fire extinguisher access, emergency exit routes, electrical panel and shutoff locations, and a fire escape plan built for your new layout.',
+    checks: [
+      { id:'nh01', num:'NH01', risk:'critical', title:'Locating and Testing Every Smoke Alarm Before the First Night',
+        who:'Anyone moving into the home, especially whoever is coordinating the move',
+        what:'Assuming existing smoke alarms work without testing them, or not knowing how many alarms are actually fitted',
+        where:'Every level of the home, including hallways outside sleeping areas',
+        why:'A working smoke alarm is one of the single most effective protections against fire injury, and a new home is exactly the moment old assumptions about safety equipment need to be checked rather than trusted',
+        how:'Locate every smoke alarm in the home, press the test button on each one, and replace batteries or the unit itself if it does not sound clearly',
+        measurement:'Recognised smoke alarm standards such as EN 14604 or equivalent describe the expected function and placement of domestic smoke alarms, tested on move-in and monthly after.',
+        example:'A family moving into a rented flat tests every smoke alarm on their first afternoon and finds one in the hallway with a flat battery, replacing it before their first night rather than after.',
+        tip:'Testing alarms is a five-minute task best done before boxes are stacked in front of doorways — do it first, not last.' },
+
+      { id:'nh02', num:'NH02', risk:'critical', title:'Installing or Verifying Carbon Monoxide Alarms Near Sleeping Areas',
+        who:'Anyone moving into a home with gas, oil, wood, or other fuel-burning appliances',
+        what:'No carbon monoxide alarm fitted, or an existing one that is outdated or untested',
+        where:'Near sleeping areas and near any fuel-burning appliance',
+        why:'Carbon monoxide is colourless and odourless, and a working alarm is the only reliable way to detect a dangerous build-up before symptoms appear',
+        how:'Fit a carbon monoxide alarm near sleeping areas and near any fuel-burning appliance, test it on move-in day, and check its recommended replacement date',
+        measurement:'Recognised carbon monoxide alarm standards such as BS EN 50291 or equivalent describe expected placement and function, with most units needing replacement within a manufacturer-stated number of years.',
+        example:'A family moving into an older home with a gas boiler fits a new carbon monoxide alarm outside each bedroom on move-in day, rather than assuming an old alarm left behind still works.',
+        tip:'If an alarm was left behind by previous occupants, check its printed replacement date before relying on it — many expire silently after several years.' },
+
+      { id:'nh03', num:'NH03', risk:'high', title:'Checking Smoke Alarm Placement Meets Recommended Room Coverage',
+        who:'The household setting up the new home',
+        what:'Smoke alarms clustered in one area of the home while other levels or long hallways have none',
+        where:'Every level and long hallway of the home',
+        why:'A smoke alarm can only give an early warning in the area where it is actually installed, so gaps in coverage delay detection exactly where it matters',
+        how:'Walk through every level of the home and confirm at least one working smoke alarm covers each level and each long hallway, adding units where coverage is missing',
+        measurement:'Recognised smoke alarm guidance recommends at least one working alarm per level of a home and outside each sleeping area.',
+        example:'A family notices their new two-storey home has smoke alarms only on the ground floor and adds one on the upper landing before moving furniture in.',
+        tip:'Take a slow walk through the whole home specifically looking up at ceilings for alarms — it is easy to miss a gap on a quick first pass.' },
+
+      { id:'nh04', num:'NH04', risk:'medium', title:'Testing Alarm Batteries and Setting a Recurring Test Reminder',
+        who:'The household member responsible for home safety upkeep',
+        what:'Alarms tested once on move-in day and then forgotten',
+        where:'Throughout the home',
+        why:'Alarms that are not retested periodically can fail silently over time, and a recurring reminder is the simplest way to keep testing consistent',
+        how:'Set a recurring reminder to test every alarm and replace batteries on a fixed, repeating schedule, not just once at move-in',
+        measurement:'Recognised smoke and carbon monoxide alarm guidance recommends monthly testing and periodic battery replacement as ongoing maintenance, not a one-time task.',
+        example:'A family sets a recurring phone reminder the same week they move in, so alarm testing becomes a routine habit rather than a one-off task.',
+        tip:'Pair the alarm test with another regular household task you already do, so it is easy to remember consistently.' },
+
+      { id:'nh05', num:'NH05', risk:'high', title:'Keeping a Working Fire Extinguisher Accessible on Each Level',
+        who:'The household setting up the new home',
+        what:'No fire extinguisher present, or one that is expired, damaged, or stored somewhere hard to reach quickly',
+        where:'Kitchen and each level of the home',
+        why:'A working extinguisher, used correctly and early, can control a small fire before it becomes a much larger emergency',
+        how:'Place a working, in-date fire extinguisher on each level of the home, particularly near the kitchen, in a location that stays accessible and is not blocked by furniture',
+        measurement:'Recognised fire safety guidance identifies an accessible, in-date extinguisher on each level as a basic home fire safety control.',
+        example:'A family adds an inexpensive kitchen fire extinguisher to their move-in shopping list, mounting it on the wall near the stove rather than tucking it in a cupboard.',
+        tip:'Check the pressure gauge and expiry date on any extinguisher left behind by previous occupants before assuming it is ready to use.' },
+
+      { id:'nh06', num:'NH06', risk:'critical', title:'Identifying and Keeping Clear at Least Two Escape Routes from Every Room',
+        who:'Every household member, including children old enough to understand',
+        what:'Only one escape route identified from bedrooms or living areas, or an escape route partially blocked by furniture or boxes',
+        where:'Every room, especially bedrooms',
+        why:'A blocked or single escape route can turn a manageable emergency into a life-threatening one if the primary route becomes unusable',
+        how:'Identify at least two ways out of every room where possible — usually a door and a window — and keep both genuinely clear of furniture, boxes, and clutter as unpacking happens',
+        measurement:'Recognised fire escape planning guidance recommends identifying two escape routes per room wherever the building layout allows.',
+        example:'A family realises moving boxes are stacked in front of a bedroom window that would normally serve as a second escape route, and rearranges them the same day.',
+        tip:'Do this check specifically during the move-in chaos, when boxes are most likely to be blocking exactly the routes you will need later.' },
+
+      { id:'nh07', num:'NH07', risk:'high', title:'Locating and Labeling the Electrical Consumer Unit or Breaker Panel',
+        who:'Every adult household member',
+        what:'Not knowing where the breaker panel is, or breakers left unlabeled so it is unclear which circuit controls which area',
+        where:'Wherever the electrical panel is located in the home',
+        why:'In an electrical emergency, knowing exactly which breaker to switch off — and being able to find the panel quickly — can prevent a small fault from becoming a serious hazard',
+        how:'Locate the panel on move-in day, test that breaker labels match the actual rooms and circuits they control, and relabel any that do not',
+        measurement:'Recognised electrical safety guidance recommends an accurately labeled breaker panel as a basic home safety requirement.',
+        example:'A family tests each breaker against the actual room it powers and finds two mislabeled, correcting the labels before their first week is out.',
+        tip:'Do the breaker-labeling check with a second person — one flips switches while the other checks which lights or outlets go off.' },
+
+      { id:'nh08', num:'NH08', risk:'high', title:'Locating the Main Water Shutoff Valve',
+        who:'Every adult household member',
+        what:'Not knowing where the main water shutoff is located',
+        where:'Wherever the main shutoff valve is located, often near the water meter or where the supply enters the home',
+        why:'In a burst pipe or major leak, knowing how to shut off the water supply quickly can prevent extensive water damage',
+        how:'Locate the main water shutoff valve on move-in day, test that it turns smoothly, and make sure every adult in the household knows where it is',
+        measurement:'Recognised home safety guidance identifies knowing the main water shutoff location as a basic move-in safety task.',
+        example:'A family locates their main shutoff valve behind an access panel under the stairs and notes its location on their emergency sheet the same day.',
+        tip:'If the valve feels stiff or difficult to turn, consider having a plumber service it early — you do not want to discover this during an actual emergency.' },
+
+      { id:'nh09', num:'NH09', risk:'critical', title:'Locating the Main Gas Shutoff Valve',
+        who:'Every adult household member in a home with a gas supply',
+        what:'Not knowing where the main gas shutoff valve is, or how to operate it, in a home connected to a gas supply',
+        where:'Wherever the gas meter or main shutoff is located, typically at the point the supply enters the home',
+        why:'In a suspected gas leak, knowing how to shut off the supply immediately, combined with leaving the property and calling for help, is a critical safety step',
+        how:'Locate the main gas shutoff valve on move-in day, confirm how it operates, and make sure every adult household member knows where it is and what a suspected gas leak smells or sounds like',
+        measurement:'Recognised gas safety guidance identifies knowing the main shutoff location and operation as an essential safety step for any home with a gas supply.',
+        example:'A family new to a gas-connected home locates the shutoff valve near the meter, checks with the gas provider on how to operate it safely, and shows every adult in the household.',
+        tip:'If you are ever unsure whether you smell gas, treat it as real — leave the property, avoid using switches or open flames, and contact your gas provider\'s emergency line from a safe distance.' },
+
+      { id:'nh10', num:'NH10', risk:'high', title:'Drawing a Simple Fire Escape Plan for the New Floor Plan',
+        who:'The whole household, including children old enough to participate',
+        what:'No escape plan created for the new, unfamiliar floor plan',
+        where:'Applies to the whole home layout',
+        why:'A floor plan that is completely new to everyone in the household means old habits and assumptions about escape routes no longer apply',
+        how:'Sketch a simple escape plan showing two routes from each room and a family meeting point outside, and walk through it together as a household in the first week',
+        measurement:'Recognised fire safety guidance recommends a written, practised escape plan specific to the current home layout.',
+        example:'A family draws a simple escape plan on a single sheet of paper during their first weekend in the new home and walks through it together before unpacking is even finished.',
+        tip:'Make the walk-through a calm, unhurried activity rather than a drill that feels alarming, especially with younger children.' },
+
+      { id:'nh11', num:'NH11', risk:'medium', title:'Checking Windows Used as Emergency Exits Open Fully and Easily',
+        who:'The household setting up escape routes',
+        what:'A window intended as an emergency exit that is painted shut, stiff, or blocked by a security bar without a release mechanism',
+        where:'Bedrooms and any room relying on a window as a secondary escape route',
+        why:'An emergency exit that cannot actually be opened quickly under pressure provides no real protection, regardless of what the escape plan assumes',
+        how:'Physically test that every window intended as an emergency exit opens fully and easily, and address any security bars that lack an internal quick-release mechanism',
+        measurement:'Recognised fire escape guidance identifies functional, quickly openable windows as a genuine requirement for any window serving as an emergency exit.',
+        example:'A family discovers a bedroom window painted shut during a previous renovation and has it freed before treating it as a viable escape route.',
+        tip:'Test every escape-route window in person rather than assuming it opens — paint, swelling, or old hardware can quietly seal a window shut over time.' },
+
+      { id:'nh12', num:'NH12', risk:'medium', title:'Confirming Smoke Alarms Are Interconnected or Positioned to Be Heard Throughout',
+        who:'The household setting up alarm coverage',
+        what:'Standalone alarms positioned so an alert in one part of the home may not be heard elsewhere, particularly while sleeping',
+        where:'Throughout the home, especially between sleeping areas and other levels',
+        why:'An alarm that cannot be heard from every sleeping area delays the response of anyone who is not near it when it activates',
+        how:'Check whether alarms are interconnected (so all sound together) and, if not, test whether an alarm on one level can realistically be heard from every bedroom with doors closed',
+        measurement:'Recognised smoke alarm guidance identifies interconnected alarms, or alarms confirmed audible from every sleeping area, as a stronger safety configuration than isolated standalone units.',
+        example:'A family tests whether the kitchen smoke alarm can be heard from an upstairs bedroom with the door closed, and adds an additional alarm after finding it could not.',
+        tip:'Test audibility with bedroom doors closed, since that is the realistic condition during sleep.' },
+
+      { id:'nh13', num:'NH13', risk:'low', title:'Agreeing a Family Meeting Point Outside the New Home',
+        who:'The whole household',
+        what:'No agreed outdoor meeting point in case of an evacuation',
+        where:'A visible, safe location outside the home',
+        why:'A pre-agreed meeting point avoids confusion and repeated re-entry into a dangerous building to search for other household members',
+        how:'Choose a specific, visible outdoor location — such as a particular tree, mailbox, or neighbour\'s driveway — and agree it as the meeting point with every household member',
+        measurement:'Recognised fire escape planning guidance recommends a specific, pre-agreed outdoor meeting point as part of any household escape plan.',
+        example:'A family agrees on the lamppost across the street as their meeting point and mentions it to their children in a calm, matter-of-fact way during the first week.',
+        tip:'Choose a landmark that will still be visible and accessible in poor weather or at night.' },
+
+      { id:'nh14', num:'NH14', risk:'medium', title:'Considering a Fire Escape Ladder for Upper-Floor Bedrooms',
+        who:'Households with bedrooms above the ground floor',
+        what:'An upper-floor bedroom with only one practical escape route and no secondary means of exit if the stairs become unusable',
+        where:'Upper-floor bedrooms',
+        why:'A collapsible fire escape ladder gives a genuine second escape option from upper floors if the main stairway is blocked',
+        how:'For bedrooms above the ground floor, consider keeping a collapsible fire escape ladder accessible near the window, and make sure any occupant capable of using it knows where it is kept',
+        measurement:'Recognised fire safety guidance identifies a secondary escape method for upper floors as a valuable addition where only one practical exit route exists.',
+        example:'A family with a teenager\'s bedroom on the upper floor keeps a compact, inexpensive escape ladder under the bed, shown to their teenager during the move-in week.',
+        tip:'Practise unfolding and hooking the ladder once in a calm moment, so it is not the first time anyone has handled it during an actual emergency.' }
+    ]
+  },
+  {
+    id: 2, name: 'Structural & Environmental Hazards', icon: '🔍',
+    desc: '14 checks: checking for prior water damage, damp and mould, general public-health awareness of lead paint and asbestos-era materials in older homes, radon awareness, pest entry signs, and staircase and railing condition.',
+    checks: [
+      { id:'nh15', num:'NH15', risk:'high', title:'Checking for Signs of Prior Water Damage or Active Leaks',
+        who:'The household inspecting the new home',
+        what:'Water stains, warped flooring, or musty smells overlooked as cosmetic rather than checked as possible signs of past or ongoing leaks',
+        where:'Ceilings, walls, under sinks, and around windows throughout the home',
+        why:'Undetected water damage can indicate an ongoing leak, hidden mould, or a structural issue that is far easier to address early than after it has spread',
+        how:'Walk through every room checking ceilings, walls, and under sinks for staining, warping, bubbling paint, or musty smells, and follow up on anything unusual before storing belongings in that area',
+        measurement:'Recognised home inspection and damp guidance identifies visible staining, warping, or musty odour as indicators warranting further investigation.',
+        example:'A family notices a faint water stain on a ceiling below a bathroom and checks with the previous occupants or a professional before assuming it is old and resolved.',
+        tip:'Check during or shortly after rain if possible — active leaks are often easier to spot when conditions actually test them.' },
+
+      { id:'nh16', num:'NH16', risk:'high', title:'Checking for Visible Mould or Damp Before Unpacking',
+        who:'The household unpacking belongings into the new home',
+        what:'Storing belongings, especially in cupboards, basements, or bathrooms, without first checking for visible mould or damp',
+        where:'Bathrooms, basements/cellars, closets, and any poorly ventilated area',
+        why:'Mould exposure is a recognised indoor air quality concern, and unpacking belongings into an affected space can spread the problem and affect the household\'s health',
+        how:'Check poorly ventilated areas for visible mould, damp patches, or a persistent musty smell before storing belongings there, and address any findings before use',
+        measurement:'WHO guidance on indoor air quality identifies damp and mould as a recognised health concern requiring prompt attention when found in a home.',
+        example:'A family checks inside every closet and under the bathroom sink before unpacking and finds a small patch of mould behind a washing machine, addressing it before storing towels nearby.',
+        tip:'A musty smell is often noticeable before mould is visible — treat it as worth investigating rather than dismissing it as an old-building smell.' },
+
+      { id:'nh17', num:'NH17', risk:'medium', title:'Understanding General Public-Health Guidance on Lead Paint in Older Homes',
+        who:'Households moving into a home built before more recent lead-paint regulations were introduced in many regions',
+        what:'Uncertainty about whether an older home may contain lead-based paint, and what that means practically for a moving household',
+        where:'Painted surfaces throughout an older home, particularly where paint is peeling, chipped, or being sanded',
+        why:'General public health guidance identifies lead paint dust and chips, particularly from renovation or peeling paint, as a recognised concern in older housing, especially for young children',
+        how:'If the home is older, avoid sanding or disturbing peeling paint until its condition is understood, keep young children away from peeling or chipping paint surfaces, and seek professional testing or guidance if renovation involving painted surfaces is planned',
+        measurement:'General public health guidance on lead paint in older housing recommends caution around disturbing painted surfaces of unknown age or condition, particularly around young children.',
+        example:'A family moving into a home built several decades ago avoids letting their toddler near a chipped windowsill and looks into professional testing before any planned renovation.',
+        tip:'This is informational general guidance, not a diagnosis of your specific home — if you are concerned, a professional test is a straightforward way to get a clear answer.' },
+
+      { id:'nh18', num:'NH18', risk:'medium', title:'Understanding General Guidance on Asbestos-Era Building Materials in Older Homes',
+        who:'Households moving into an older home, particularly one being renovated',
+        what:'Uncertainty about whether an older home may contain asbestos-era building materials, and what that means for planned renovation work',
+        where:'Applies particularly to insulation, older flooring, ceiling tiles, and other materials in homes built during the relevant era in many regions',
+        why:'General public health guidance identifies certain older building materials as a recognised concern if disturbed, particularly during renovation, drilling, or demolition work',
+        how:'If the home is older and renovation is planned, avoid disturbing suspect materials such as old insulation, textured ceilings, or certain flooring until their composition is understood, and seek professional testing or a qualified contractor for any work that would disturb them',
+        measurement:'General public health and occupational safety guidance recommends professional testing before disturbing suspect older building materials, rather than assuming their composition either way.',
+        example:'Before removing an old ceiling texture during a planned renovation, a family arranges professional testing first rather than proceeding without checking.',
+        tip:'This is general, non-alarmist background information — most everyday living in an older home does not require any special precaution unless materials are being disturbed.' },
+
+      { id:'nh19', num:'NH19', risk:'medium', title:'Basic Radon Awareness for the New Location',
+        who:'Households moving into any home, particularly in regions where radon is a known consideration',
+        what:'No awareness of whether radon is a relevant consideration for the new home\'s location',
+        where:'Lower levels of the home, particularly basements or ground-floor rooms',
+        why:'Radon is a naturally occurring gas that can accumulate indoors in some locations, and WHO guidance identifies indoor radon exposure as a recognised indoor air quality consideration',
+        how:'Check whether radon testing is a relevant consideration for the home\'s specific location, and if so, use a straightforward home test kit or professional testing service',
+        measurement:'WHO guidance on indoor air quality addresses radon as a naturally occurring indoor air consideration in some locations, testable with widely available kits.',
+        example:'A family new to an area checks general regional guidance on radon and, finding it relevant to their location, orders a straightforward test kit for their lower level.',
+        tip:'Radon testing is usually simple and inexpensive — a short test period is often enough for an initial screening result.' },
+
+      { id:'nh20', num:'NH20', risk:'medium', title:'Checking for Signs of Pest or Rodent Entry Points',
+        who:'The household inspecting the new home',
+        what:'Gaps, holes, or droppings that indicate pest or rodent entry, overlooked during the initial walkthrough',
+        where:'Around pipes, vents, foundations, and gaps in exterior walls',
+        why:'Unaddressed entry points allow pests to establish themselves early, which is more disruptive and harder to resolve than sealing gaps before it happens',
+        how:'Check for gaps around pipes, vents, and foundations, look for droppings or nesting signs in cupboards and quiet corners, and seal any obvious entry points early',
+        measurement:'Recognised pest control guidance identifies sealing entry points and early inspection as more effective than addressing an established infestation.',
+        example:'A family notices a small gap around a pipe entering under the kitchen sink and seals it with an inexpensive filler during their first week.',
+        tip:'Check quiet, undisturbed areas like the back of cupboards and behind large appliances — these are the spots pest signs are most often missed.' },
+
+      { id:'nh21', num:'NH21', risk:'high', title:'Checking Staircase and Railing Condition and Stability',
+        who:'The household using the home\'s staircases',
+        what:'A staircase or railing that wobbles, has a loose step, or has gaps large enough for a small child to fit through',
+        where:'Every staircase and railing in the home',
+        why:'An unstable staircase or railing is a serious fall risk, and this is often invisible until someone actually tests it under load',
+        how:'Test every staircase for loose or wobbly steps and check every railing by applying firm pressure to confirm it is securely fixed, addressing any issues before relying on them',
+        measurement:'Recognised home safety guidance identifies secure, stable staircases and railings as a basic structural safety requirement, particularly in households with children or older adults.',
+        example:'A family finds a loose baluster on their staircase during a firm-pressure check and has it repaired before their toddler starts exploring the stairs unsupervised.',
+        tip:'Test railings with a firm push, not just a light touch — a railing can look solid while still being loose enough to fail under real weight.' },
+
+      { id:'nh22', num:'NH22', risk:'medium', title:'Checking Ceiling and Wall Surfaces for Cracks or Structural Movement',
+        who:'The household inspecting the new home',
+        what:'Cracks in ceilings or walls dismissed as cosmetic without checking whether they indicate ongoing structural movement',
+        where:'Ceilings and load-bearing walls throughout the home',
+        why:'While many cracks are genuinely cosmetic, some patterns can indicate structural movement worth a professional opinion, and it is easier to note this early than after decorating over it',
+        how:'Note the location and rough size of any visible cracks during the first walkthrough, and seek a professional opinion if cracks appear along structural lines, are unusually wide, or seem to be actively growing',
+        measurement:'Recognised home inspection guidance distinguishes routine cosmetic cracking from patterns warranting professional structural assessment.',
+        example:'A family photographs a hairline crack above a doorway during move-in week to check later whether it changes in width over time.',
+        tip:'A simple way to monitor a crack is to note the date and take a photo with a ruler for scale, so any change over time is easy to see.' },
+
+      { id:'nh23', num:'NH23', risk:'low', title:'Checking Guttering and Drainage Are Directing Water Away from the Foundation',
+        who:'The household responsible for exterior home maintenance',
+        what:'Guttering that is blocked, damaged, or directing water toward the foundation instead of away from it',
+        where:'Roofline, gutters, and ground-level drainage around the home\'s perimeter',
+        why:'Water directed toward the foundation over time can contribute to damp and structural issues that are far more costly to address once established',
+        how:'Walk the perimeter of the home checking that gutters are clear and downspouts direct water away from the foundation, arranging clearing or repair if needed',
+        measurement:'Recognised home maintenance guidance identifies functioning guttering and drainage away from the foundation as a basic preventive measure against water-related damage.',
+        example:'A family notices a downspout discharging directly against the foundation and adds an inexpensive extension to direct water further away.',
+        tip:'Check gutters and drainage during or shortly after rain if possible, when problems are easiest to actually see in action.' },
+
+      { id:'nh24', num:'NH24', risk:'medium', title:'Checking Windows and Door Frames Seal Properly Against Weather',
+        who:'The household setting up the new home',
+        what:'Gaps or drafts around windows and door frames that let in weather, moisture, or reduce energy efficiency',
+        where:'Every window and exterior door frame',
+        why:'Poor sealing can allow moisture ingress over time, contributing to damp, and also affects comfort and energy efficiency',
+        how:'Check for visible gaps or drafts around window and door frames, and arrange resealing or weatherstripping where needed',
+        measurement:'Recognised home maintenance guidance identifies properly sealed window and door frames as a basic control against moisture ingress and heat loss.',
+        example:'A family feels a draft around a bedroom window frame on a windy day and adds inexpensive weatherstripping the same week.',
+        tip:'A simple way to check for drafts is to hold a hand near frame edges on a windy day — you will usually feel a gap before you can see one.' },
+
+      { id:'nh25', num:'NH25', risk:'medium', title:'Checking Ventilation in Bathrooms and Kitchen for Damp Prevention',
+        who:'The household using bathrooms and the kitchen daily',
+        what:'Bathroom or kitchen extractor fans that are missing, not working, or rarely used',
+        where:'Bathrooms and kitchen',
+        why:'Poor ventilation in high-moisture areas is a leading contributor to condensation and mould, and this is one of the most preventable causes of ongoing damp problems',
+        how:'Test that bathroom and kitchen extractor fans work, and build a habit of using them during and after showers, baths, and cooking',
+        measurement:'Recognised guidance on damp and indoor air quality identifies effective ventilation in high-moisture areas as a primary control against condensation-related mould.',
+        example:'A family tests the bathroom extractor fan on move-in day and finds it is not connected properly, arranging a repair before their first week of regular showers.',
+        tip:'Make running the extractor fan an automatic habit tied to showering or cooking, rather than something to remember separately.' },
+
+      { id:'nh26', num:'NH26', risk:'low', title:'Noting Any Flooring Damage or Uneven Surfaces',
+        who:'The household walking through the new home',
+        what:'Uneven flooring, loose tiles, or damaged flooring sections that could become a trip hazard once furniture and belongings are in place',
+        where:'Throughout the home, particularly transition points between rooms',
+        why:'Flooring issues are easier to note and address before furniture is arranged over them, and uneven surfaces are a common cause of household falls',
+        how:'Walk every room noting any uneven, loose, or damaged flooring, and address or clearly mark hazards before arranging furniture around them',
+        measurement:'Recognised home safety guidance identifies even, secure flooring as a basic fall-prevention consideration in any home.',
+        example:'A family notices a slightly raised floorboard in a hallway during their first walkthrough and has it fixed before it becomes a hidden trip hazard under a rug.',
+        tip:'Check flooring transitions between rooms carefully — thresholds and material changes are where trip hazards are most often missed.' },
+
+      { id:'nh27', num:'NH27', risk:'medium', title:'Checking Attic/Loft and Basement/Cellar Areas for Damp, Pests or Damage',
+        who:'The household inspecting less-visited areas of the home',
+        what:'Attic, loft, basement, or cellar areas left unchecked because they are used infrequently',
+        where:'Attic/loft and basement/cellar spaces',
+        why:'These areas are where damp, pest activity, or structural issues often develop unnoticed, precisely because they are visited less often than main living spaces',
+        how:'Do a dedicated walkthrough of the attic/loft and basement/cellar during move-in week, checking for damp, pest signs, damaged insulation, or structural concerns',
+        measurement:'Recognised home inspection guidance identifies infrequently visited spaces as areas warranting a specific, deliberate check rather than being overlooked.',
+        example:'A family sets aside twenty minutes during move-in week specifically to check their basement with a torch, rather than only visiting it later when storing boxes.',
+        tip:'Bring a torch even if the area has lighting — shadowed corners are exactly where problems are most likely to go unnoticed.' },
+
+      { id:'nh28', num:'NH28', risk:'low', title:'Photographing Any Existing Structural Concerns for Future Reference',
+        who:'The household documenting the home\'s condition',
+        what:'Structural concerns noticed during the walkthrough but not documented with photos or notes',
+        where:'Applies to any structural or maintenance concern identified in this zone',
+        why:'A photographic record from move-in day provides a clear reference point if a concern changes over time or needs to be raised with a landlord, insurer, or contractor later',
+        how:'Photograph any structural or environmental concern identified during the walkthrough, noting the date, and keep these with the household\'s move-in documentation',
+        measurement:'Recognised home documentation guidance recommends dated photographic records of any pre-existing concern noted at move-in.',
+        example:'A family photographs the hairline ceiling crack and the small basement damp patch they noticed, filing both under a single move-in folder for future reference.',
+        tip:'Store these photos alongside your general move-in day photos from the documentation zone, so everything lives in one easy-to-find place.' }
+    ]
+  },
+  {
+    id: 3, name: 'Utilities, Water & Electrical Safety', icon: '⚡',
+    desc: '14 checks: outlet testing including GFCI/RCD-equivalent protection near water, water heater temperature, water quality, ventilation and extractor fans, and basic appliance and wiring safety checks.',
+    checks: [
+      { id:'nh29', num:'NH29', risk:'high', title:'Testing Every Electrical Outlet for Power and Condition',
+        who:'The household setting up the new home',
+        what:'Outlets assumed to work without testing, or visibly damaged outlets left in use',
+        where:'Every room with electrical outlets',
+        why:'A non-functioning or damaged outlet can indicate a wiring issue, and testing early avoids discovering the problem only once an appliance is already plugged in',
+        how:'Test every outlet with a simple plug-in device or outlet tester, and note or flag any that do not work or appear cracked, loose, or discoloured',
+        measurement:'Recognised electrical safety guidance identifies testing outlets for function and visible condition as a basic move-in safety task.',
+        example:'A family tests every outlet with an inexpensive plug-in tester during their first weekend and finds one that shows a wiring fault, arranging an electrician\'s visit before using it.',
+        tip:'A simple plug-in outlet tester is inexpensive and gives an instant read on common wiring faults — well worth adding to the move-in supply list.' },
+
+      { id:'nh30', num:'NH30', risk:'critical', title:'Confirming GFCI/RCD-Equivalent Protection Near Water Sources',
+        who:'The household setting up the new home',
+        what:'Outlets near water sources — kitchen, bathroom, outdoor — without ground-fault or residual-current protection',
+        where:'Kitchen, bathroom, and outdoor outlets',
+        why:'Electrical outlets near water carry a significantly higher shock risk, and ground-fault/residual-current protection is specifically designed to prevent serious or fatal shock in these locations',
+        how:'Check whether outlets near water sources have GFCI or RCD-equivalent protection (often identifiable by a visible test/reset button), and arrange for a qualified electrician to add this protection where it is missing',
+        measurement:'Recognised electrical safety standards identify GFCI/RCD-equivalent protection near water sources as an essential safety requirement, not an optional upgrade.',
+        example:'A family finds their bathroom outlet has no visible test/reset button and arranges for a qualified electrician to install GFCI/RCD-equivalent protection before regular use.',
+        tip:'If you are unsure whether an outlet has this protection, a qualified electrician can confirm it quickly — this is not a check to guess at.' },
+
+      { id:'nh31', num:'NH31', risk:'high', title:'Setting a Safe Water Heater Temperature',
+        who:'The household, particularly households with young children or older adults',
+        what:'A water heater left at whatever temperature the previous occupants set, without checking whether it is safe',
+        where:'Water heater and every hot water tap in the home',
+        why:'Water that is too hot creates a scald risk, particularly for young children and older adults, while water that is too cool can allow bacterial growth',
+        how:'Check and, if necessary, adjust the water heater thermostat to a safe setting, and test the actual temperature at the tap rather than relying on the thermostat dial alone',
+        measurement:'Recognised home safety guidance recommends a water heater setting of approximately 49°C [120°F] or below at the tap to reduce scald risk while limiting bacterial growth risk.',
+        example:'A family tests their tap water temperature with a simple thermometer during move-in week and adjusts the water heater down slightly after finding it uncomfortably hot.',
+        tip:'Test water temperature at the tap itself, not just the thermostat dial — the two do not always match exactly.' },
+
+      { id:'nh32', num:'NH32', risk:'medium', title:'Checking Water Quality and Plumbing for Visible Issues',
+        who:'The household setting up water use in the new home',
+        what:'Discoloured water, unusual odour, or visible plumbing issues not investigated before regular use begins',
+        where:'Every tap and visible plumbing connection in the home',
+        why:'Unusual water colour, smell, or pressure can indicate a plumbing issue worth investigating before it becomes a larger problem or affects water quality',
+        how:'Run every tap briefly during move-in week, checking for discolouration, odour, or unusual pressure, and check visible pipe connections under sinks for any sign of leaking',
+        measurement:'Recognised home safety guidance identifies checking water clarity, odour, and visible plumbing condition as a basic move-in task.',
+        example:'A family notices slightly discoloured water from a rarely used outdoor tap and lets it run until it clears, monitoring it over the following days.',
+        tip:'If discolouration or odour persists beyond an initial flush, it is worth contacting the water provider or a plumber rather than assuming it will resolve on its own.' },
+
+      { id:'nh33', num:'NH33', risk:'medium', title:'Checking Ventilation and Extractor Fans Are Working',
+        who:'The household using kitchen and bathroom spaces',
+        what:'Extractor fans in the kitchen, bathroom, or utility spaces not tested for function',
+        where:'Kitchen, bathrooms, and any enclosed utility space',
+        why:'Ventilation removes excess moisture and airborne contaminants, and a fan that does not actually work provides none of that protection despite appearing installed',
+        how:'Test every extractor fan for airflow and noise level, and arrange repair or replacement for any that are not functioning',
+        measurement:'Recognised guidance on indoor air quality and damp prevention identifies functioning ventilation as a basic requirement in kitchens and bathrooms.',
+        example:'A family holds a tissue near the bathroom extractor fan to confirm actual airflow, discovering it is not pulling air despite switching on and sounding like it works.',
+        tip:'A fan that makes noise is not necessarily moving air — the tissue or paper test gives a quick, reliable check of actual airflow.' },
+
+      { id:'nh34', num:'NH34', risk:'medium', title:'Safety-Checking Major Appliances Before First Use',
+        who:'The household setting up kitchen and utility appliances',
+        what:'Appliances left by previous occupants, or newly installed, used for the first time without a basic safety check',
+        where:'Kitchen and utility area',
+        why:'An appliance with a damaged cord, loose connection, or unclear service history carries a higher risk of electrical fault or fire than one that has been checked first',
+        how:'Inspect major appliances for damaged cords or visible faults before first use, and check any gas appliance connection with the gas provider or a qualified technician if there is uncertainty about its condition',
+        measurement:'Recognised appliance safety guidance recommends a basic visual and functional check before first use of any appliance, particularly ones left by previous occupants.',
+        example:'A family checks the cord and plug of a washing machine left behind by previous occupants before running its first cycle, finding it in good condition.',
+        tip:'If an appliance\'s history or service record is unknown, a basic check before first use costs little time and can catch an obvious issue early.' },
+
+      { id:'nh35', num:'NH35', risk:'medium', title:'Checking for Exposed Wiring or Damaged Outlets',
+        who:'The household inspecting the home\'s electrical condition',
+        what:'Exposed wiring, cracked outlet covers, or scorch marks around outlets or switches overlooked during a quick walkthrough',
+        where:'Throughout the home, particularly older fixtures and outlets',
+        why:'Exposed wiring or visible damage around electrical fixtures is a direct shock and fire risk that is straightforward to spot with a careful, deliberate check',
+        how:'Walk through every room specifically looking at outlets, switches, and visible wiring for exposed wire, cracked covers, or discolouration, and have anything unusual assessed by a qualified electrician',
+        measurement:'Recognised electrical safety guidance identifies visible wiring damage or discolouration around fixtures as a clear signal for professional assessment.',
+        example:'A family notices a slightly discoloured outlet cover in an older part of the home and has an electrician check it before using that outlet regularly.',
+        tip:'Discolouration or a faint burning smell around an outlet is worth taking seriously immediately — do not wait to see if it happens again.' },
+
+      { id:'nh36', num:'NH36', risk:'medium', title:'Confirming Extension Cord and Power Strip Safety Practices',
+        who:'The household setting up electronics and appliances during unpacking',
+        what:'Extension cords or power strips overloaded, daisy-chained, or run under rugs during the unpacking period',
+        where:'Throughout the home, particularly around new furniture and electronics setup',
+        why:'Overloaded or improperly used extension cords are a recognised fire risk, and move-in periods are exactly when temporary, improvised setups are most common',
+        how:'Avoid daisy-chaining power strips, do not run cords under rugs or through doorways, and check the rated load of any extension cord or power strip against what is actually plugged into it',
+        measurement:'Recognised electrical safety guidance identifies overloaded or improvised extension cord use as a common, preventable fire risk during temporary setups.',
+        example:'A family replaces a daisy-chained set of power strips behind their new entertainment unit with a single, properly rated power strip.',
+        tip:'Treat any extension cord setup from the first week as temporary — plan a proper, permanent outlet solution rather than leaving it in place indefinitely.' },
+
+      { id:'nh37', num:'NH37', risk:'low', title:'Locating the Water Meter and Understanding Basic Readings',
+        who:'The household managing utility accounts',
+        what:'Not knowing the location of the water meter or how to read it',
+        where:'Wherever the water meter is located, often near the property boundary or utility entry point',
+        why:'Knowing the meter location and reading helps confirm accurate billing and can help detect an unexpected leak through unusually high usage',
+        how:'Locate the water meter, note the reading on move-in day, and check it periodically against usage to catch any unexpected increase early',
+        measurement:'Recognised home utility guidance recommends noting an initial meter reading at move-in for billing accuracy and leak detection.',
+        example:'A family notes their water meter reading in their move-in file on the first day, giving them a clear baseline for their first bill.',
+        tip:'An unexplained jump in the water meter reading between checks is often the earliest sign of a hidden leak — worth a quick look periodically.' },
+
+      { id:'nh38', num:'NH38', risk:'medium', title:'Checking Boiler/Water Heater/Furnace Servicing History',
+        who:'The household relying on the home\'s heating and hot water systems',
+        what:'No information about when the boiler, water heater, or furnace was last serviced',
+        where:'Wherever the heating and hot water system is located',
+        why:'Regular servicing reduces the risk of carbon monoxide leaks, inefficient operation, and unexpected breakdowns, and an unknown service history is worth following up on',
+        how:'Ask the previous occupants, landlord, or seller for the servicing history if available, and arrange a professional service or safety check if the history is unknown or overdue',
+        measurement:'Recognised guidance on gas and heating appliance safety recommends regular professional servicing, with an unknown or overdue history warranting a check.',
+        example:'A family with no service records for their new home\'s boiler arranges a professional safety check during their first month rather than assuming it is fine.',
+        tip:'Keep any servicing paperwork you do receive in your move-in documentation folder, alongside the emergency shutoff information from the documentation zone.' },
+
+      { id:'nh39', num:'NH39', risk:'medium', title:'Checking Dryer Vent and Lint Trap Cleanliness for Fire Risk',
+        who:'Households with a clothes dryer in the new home',
+        what:'A dryer vent or duct not checked for lint buildup before regular use begins',
+        where:'Behind and around the clothes dryer, and along its exhaust duct',
+        why:'Lint buildup in a dryer vent is a recognised and preventable cause of house fires, and a home new to the household is an ideal moment to check rather than assume it is clear',
+        how:'Clean the lint trap before every use, and check the dryer vent duct for buildup or blockage during move-in, arranging a professional cleaning if it appears clogged',
+        measurement:'Recognised fire safety guidance identifies dryer vent maintenance as a basic, preventable fire safety task in any home with a clothes dryer.',
+        example:'A family checks their new home\'s dryer vent duct before first use and finds visible lint buildup, arranging a cleaning before running a full load.',
+        tip:'If you are unsure how long it has been since the vent was last cleaned, treat a first check as worthwhile regardless of how the dryer currently performs.' },
+
+      { id:'nh40', num:'NH40', risk:'medium', title:'Testing Hot Water Temperature at the Tap',
+        who:'The household, particularly if young children or older adults will use the bathroom independently',
+        what:'Hot water temperature not tested directly at bathroom and kitchen taps',
+        where:'Every hot water tap, particularly in bathrooms used by children or older adults',
+        why:'Confirming actual tap temperature, not just the water heater setting, ensures the safety adjustment made in the utility area is actually reflected where people use the water',
+        how:'Run hot water at each tap and check the temperature directly with a simple thermometer, adjusting the water heater further if any tap runs hotter than expected',
+        measurement:'Recognised home safety guidance recommends confirming a safe tap temperature directly, generally at or below approximately 49°C [120°F].',
+        example:'A family checks the bathroom tap their toddler will eventually use independently and confirms it matches the safe range they set at the water heater.',
+        tip:'Temperature can vary slightly between taps depending on plumbing distance — check the ones young children or older adults will use most.' },
+
+      { id:'nh41', num:'NH41', risk:'low', title:'Checking for Adequate Lighting in Utility Areas',
+        who:'The household using utility, basement, or garage spaces',
+        what:'Utility areas, basements, or garages with poor or non-functioning lighting',
+        where:'Utility rooms, basements/cellars, and garages',
+        why:'Good lighting in utility areas reduces the risk of trips, falls, and mistakes when working with electrical panels, water shutoffs, or tools',
+        how:'Test lighting in every utility area and arrange repair or improved lighting where it is dim, flickering, or non-functional',
+        measurement:'Recognised home safety guidance identifies adequate lighting in utility and storage areas as a basic fall and error-prevention measure.',
+        example:'A family adds a plug-in light to a dim basement corner near the electrical panel, making it easier and safer to access if needed in an emergency.',
+        tip:'Check utility area lighting specifically at night or with curtains closed, since daylight can mask how dim a space really is.' },
+
+      { id:'nh42', num:'NH42', risk:'medium', title:'Confirming Circuit Labeling Matches Actual Rooms',
+        who:'The household verifying electrical panel accuracy',
+        what:'A follow-up on breaker panel labeling from the safety systems zone, confirming labels are accurate room by room rather than just present',
+        where:'Electrical panel and every room it serves',
+        why:'Accurate labeling saves critical time in an emergency and prevents confusion when working on a specific circuit',
+        how:'With a second person, systematically flip each breaker and confirm which outlets and lights it controls, updating the panel label to match exactly',
+        measurement:'Recognised electrical safety guidance recommends verified, accurate circuit labeling rather than labeling inherited from previous occupants without confirmation.',
+        example:'A family discovers that a breaker labeled "kitchen" actually also controls part of the dining room, and updates the label to reflect both accurately.',
+        tip:'This check pairs naturally with the initial panel location check earlier in the checklist — do them together to save time.' }
+    ]
+  },
+  {
+    id: 4, name: 'Security & Access Safety', icon: '🔐',
+    desc: '14 checks: rekeying locks on move-in, window lock function, garage and outdoor access points, exterior lighting, and garden and yard hazards such as pools, sheds and tools.',
+    checks: [
+      { id:'nh43', num:'NH43', risk:'high', title:'Rekeying or Changing All Exterior Locks on Move-In',
+        who:'Every new household, whether owning or renting',
+        what:'Continuing to use existing locks without rekeying or replacing them, even though the number of people who may hold a copy of the old keys is unknown',
+        where:'Every exterior door with a lock',
+        why:'Previous occupants, contractors, or others may still hold keys to the existing locks, and this is unknown information that a simple rekey or lock change resolves completely',
+        how:'Arrange to rekey or replace exterior locks as one of the first tasks after move-in, before treating the home as fully secure',
+        measurement:'Recognised home security guidance recommends rekeying or changing exterior locks on move-in as standard practice, regardless of assurances from previous occupants.',
+        example:'A family renting a new flat arranges a locksmith visit within the first few days to rekey the front door, rather than assuming the landlord\'s prior tenant did not keep a copy.',
+        tip:'This is worth prioritising in the first week — it is a genuinely low-cost step that closes an unknown security gap immediately.' },
+
+      { id:'nh44', num:'NH44', risk:'medium', title:'Testing Every Window Lock for Function',
+        who:'The household securing the new home',
+        what:'Window locks assumed to work without testing, particularly on ground-floor or easily accessible windows',
+        where:'Every window, particularly ground-floor and easily accessible upper windows',
+        why:'A window lock that does not function properly provides no real security regardless of appearance, and this is easy to test but easy to overlook',
+        how:'Test every window lock for smooth, secure function, and arrange repair or replacement for any that are stiff, broken, or missing',
+        measurement:'Recognised home security guidance identifies functioning window locks as a basic security requirement, particularly for ground-floor and easily accessible windows.',
+        example:'A family finds a ground-floor window latch that does not fully engage and has it repaired before treating that window as secure.',
+        tip:'Test locks by actually locking and unlocking each window, not just visually checking that a lock mechanism is present.' },
+
+      { id:'nh45', num:'NH45', risk:'medium', title:'Checking Garage and Outdoor Access Point Security',
+        who:'The household with a garage or additional outdoor access points',
+        what:'Garage doors, side gates, or other outdoor access points not checked for secure locking',
+        where:'Garage, side gates, and any additional outdoor entry point',
+        why:'Secondary access points are sometimes overlooked in favour of the main front door, but they represent an equally real access route into the home or property',
+        how:'Check that garage doors, side gates, and any other outdoor access points lock securely, and address any that do not',
+        measurement:'Recognised home security guidance identifies all access points, not just the main entrance, as relevant to overall home security.',
+        example:'A family checks their side gate latch and finds it does not fully secure, adding a simple locking mechanism during their first weekend.',
+        tip:'Walk the full perimeter of the property specifically looking for access points — it is easy to focus only on the doors you use daily.' },
+
+      { id:'nh46', num:'NH46', risk:'medium', title:'Installing or Checking Exterior Lighting at Entry Points',
+        who:'The household setting up the new home\'s exterior',
+        what:'Poor or non-functioning lighting at exterior entry points',
+        where:'Front door, back door, and any other frequently used exterior entry point',
+        why:'Good exterior lighting improves both security and everyday safety when arriving home or checking on noises after dark',
+        how:'Test existing exterior lighting at every entry point and add or repair lighting where it is missing or not working',
+        measurement:'Recognised home security guidance identifies adequate exterior lighting at entry points as a basic and effective security measure.',
+        example:'A family adds a motion-sensor light to a dark side entrance during their first weekend, immediately noticing it is easier and safer to use after dark.',
+        tip:'Motion-sensor lighting is a straightforward, inexpensive option that adds both security and convenience without needing to remember to switch it on.' },
+
+      { id:'nh47', num:'NH47', risk:'medium', title:'Checking Garden or Yard for Pool, Pond or Water Hazards',
+        who:'Households with children, particularly toddlers and young children',
+        what:'A pool, pond, or other standing water feature in the garden or yard not yet assessed for barrier safety',
+        where:'Garden, yard, or outdoor space',
+        why:'Standing water is a serious and well-documented drowning risk for young children, and a new outdoor space needs the same scrutiny as any indoor hazard',
+        how:'Check whether any pool, pond, or water feature has a secure barrier or cover, and supervise closely or restrict access until appropriate safety measures are confirmed',
+        measurement:'Recognised child safety guidance identifies secure barriers around any standing water as an essential control in households with young children.',
+        example:'A family moving into a home with a garden pond fences it off securely before allowing their toddler to play in the garden unsupervised.',
+        tip:'Even a small or shallow water feature is worth taking seriously — young children can be at risk in very little water.' },
+
+      { id:'nh48', num:'NH48', risk:'medium', title:'Securing Sheds, Tools and Garden Chemicals',
+        who:'Households with a shed, garage, or outdoor storage area',
+        what:'Tools, garden chemicals, or equipment left accessible in an unlocked shed or storage area',
+        where:'Shed, garage, or outdoor storage area',
+        why:'Tools and garden chemicals present both an injury and poisoning risk if accessible to children, and outdoor storage areas are easy to overlook compared with indoor spaces',
+        how:'Store tools and garden chemicals in a locked shed or cabinet, out of reach and sight of children',
+        measurement:'Recognised home and child safety guidance identifies secured storage of tools and chemicals as a basic outdoor safety requirement.',
+        example:'A family moves garden chemicals from an open shed shelf into a locked cabinet within the shed during their first week in the new home.',
+        tip:'Treat garden chemicals with the same storage care as household cleaning products and medication — out of reach and, where possible, locked away.' },
+
+      { id:'nh49', num:'NH49', risk:'low', title:'Checking Fence and Gate Condition Around the Property',
+        who:'The household with children, pets, or a garden used for outdoor play',
+        what:'Damaged fencing or gates that do not latch securely, allowing a child or pet to wander beyond the property boundary',
+        where:'Property perimeter fencing and gates',
+        why:'A secure perimeter keeps children and pets safely contained within the garden or yard and prevents unsupervised access from outside',
+        how:'Walk the property perimeter checking for gaps, damage, or gates that do not latch securely, and arrange repair before allowing unsupervised outdoor play',
+        measurement:'Recognised child and pet safety guidance identifies a secure, intact perimeter as a basic requirement before unsupervised outdoor access.',
+        example:'A family finds a gap under a fence panel large enough for their dog to squeeze through and repairs it before letting the dog into the garden unsupervised.',
+        tip:'Check gate latches specifically for self-closing and self-latching function if young children will use the garden — a gate that can be left open defeats the purpose of the fence.' },
+
+      { id:'nh50', num:'NH50', risk:'medium', title:'Confirming Doorbell/Intercom and Visitor Verification Setup',
+        who:'The household setting up everyday home security habits',
+        what:'No easy way to see or verify who is at the door before opening it',
+        where:'Front door and main entry point',
+        why:'Being able to verify a visitor\'s identity before opening the door is a simple, everyday security habit that a new home needs re-establishing',
+        how:'Check that the doorbell, intercom, or door viewer works, and establish a household habit of verifying visitors before opening the door, especially for children old enough to answer it',
+        measurement:'Recognised home security guidance identifies visitor verification before opening the door as a basic, everyday security practice.',
+        example:'A family tests their new home\'s door viewer and talks with their older child about always checking who is there before opening the door.',
+        tip:'If there is no door viewer or intercom, an inexpensive one is a simple addition worth considering during the first weeks.' },
+
+      { id:'nh51', num:'NH51', risk:'medium', title:'Checking All Exterior Doors Have Functioning Deadbolts',
+        who:'The household securing the new home',
+        what:'Exterior doors relying on a single lock mechanism, or a deadbolt that does not fully engage',
+        where:'Every exterior door',
+        why:'A functioning deadbolt provides meaningfully stronger resistance to forced entry than a standard latch lock alone',
+        how:'Test that every exterior door has a functioning deadbolt that fully engages, and arrange installation or repair where one is missing or faulty',
+        measurement:'Recognised home security guidance identifies a functioning deadbolt on every exterior door as a standard security measure.',
+        example:'A family finds their back door has no deadbolt, only a standard latch, and has one installed during their first month.',
+        tip:'Test the deadbolt by actually locking the door from outside and confirming it holds firm, not just that it turns.' },
+
+      { id:'nh52', num:'NH52', risk:'low', title:'Noting Neighbours or Building Contacts for Everyday Awareness',
+        who:'The household settling into a new neighbourhood or building',
+        what:'No connection yet made with immediate neighbours or a building contact who might notice something unusual',
+        where:'Applies to the immediate neighbourhood or building',
+        why:'A neighbour or building contact who recognises the household is more likely to notice and mention something unusual, adding a layer of everyday awareness',
+        how:'Introduce yourself to immediate neighbours or a building contact in the first weeks, and note their details on the household\'s cheat sheet if a relationship is established',
+        measurement:'Recognised community safety guidance identifies familiarity with immediate neighbours as a simple, low-cost contributor to everyday household security.',
+        example:'A family introduces themselves to the neighbours on either side within their first week, exchanging basic contact information for everyday awareness.',
+        tip:'A brief, friendly introduction is enough — this does not need to be a close relationship to add genuine value.' },
+
+      { id:'nh53', num:'NH53', risk:'medium', title:'Checking Smoke/Security Sensor Coverage for Garage or Outbuildings',
+        who:'Households with a garage, workshop, or outbuilding',
+        what:'Garages and outbuildings often left outside the home\'s smoke alarm and security coverage',
+        where:'Garage, workshop, or any outbuilding',
+        why:'Garages often store flammable materials and tools, making them a meaningful fire and security consideration despite being outside the main living space',
+        how:'Check whether the garage or any outbuilding has smoke alarm coverage where appropriate, and consider basic security measures consistent with the main home',
+        measurement:'Recognised home safety guidance recommends extending relevant fire and security considerations to garages and outbuildings, not just the main living space.',
+        example:'A family adds a heat alarm suitable for a garage environment after realising their new garage stores paint and tools but had no detection coverage.',
+        tip:'A standard smoke alarm is not always suitable for a garage environment — a heat alarm is often the more appropriate choice for spaces with dust, fumes, or temperature swings.' },
+
+      { id:'nh54', num:'NH54', risk:'medium', title:'Reviewing Any Existing Security System or Cameras Left by Previous Occupants',
+        who:'Households moving into a home with an existing security system or camera setup',
+        what:'An existing security system or camera setup left active without understanding who else might have access to it',
+        where:'Wherever security systems or cameras are installed in or around the home',
+        why:'An existing system may retain access for previous occupants, installers, or a monitoring service unless credentials are reset, which is a meaningful privacy and security gap',
+        how:'Reset all access codes, passwords, and app credentials for any existing security system or camera setup, or replace the system if reset is not possible',
+        measurement:'Recognised home security guidance recommends resetting all access credentials for any inherited security or camera system before relying on it.',
+        example:'A family inherits a video doorbell from previous occupants and resets the account credentials completely before using it, rather than assuming the old account was removed.',
+        tip:'If you cannot confirm a reset was fully successful, treat the system as untrustworthy until it is replaced or professionally reset.' },
+
+      { id:'nh55', num:'NH55', risk:'low', title:'Storing Spare Keys Securely, Not in Obvious Hiding Spots',
+        who:'The household managing household keys',
+        what:'A spare key hidden under a doormat, in a plant pot, or another obvious, commonly known hiding spot',
+        where:'Exterior of the home',
+        why:'Common hiding spots for spare keys are well known and offer little real security, undermining the value of rekeying locks',
+        how:'Avoid hiding spare keys in obvious exterior locations, and instead give a spare to a trusted neighbour or family member, or use a securely mounted lock box',
+        measurement:'Recognised home security guidance identifies obvious exterior key-hiding spots as a common and preventable security weakness.',
+        example:'A family that used to leave a spare key under a plant pot instead gives a spare to a trusted neighbour after moving into their new home.',
+        tip:'If a lock box is used, choose one that mounts securely rather than a lightweight version that could be removed entirely.' },
+
+      { id:'nh56', num:'NH56', risk:'medium', title:'Checking Balcony, Deck and Patio Railing Security',
+        who:'Households with a balcony, deck, or elevated patio',
+        what:'A balcony, deck, or patio railing not checked for secure attachment before regular use',
+        where:'Any balcony, deck, or elevated outdoor area',
+        why:'A loose or poorly attached railing on an elevated area is a serious fall risk, and this is often invisible until tested under real pressure',
+        how:'Test balcony, deck, or patio railings with firm pressure to confirm secure attachment, and restrict access until any issue is repaired',
+        measurement:'Recognised home safety guidance identifies secure railings on elevated outdoor areas as a basic structural safety requirement.',
+        example:'A family tests their new apartment\'s balcony railing with firm pressure before letting their children spend time out there, finding it solid and secure.',
+        tip:'This check matters just as much for adults as for children — a loose railing is a real hazard for anyone leaning against it.' }
+    ]
+  },
+  {
+    id: 5, name: 'Room-by-Room Family Safety Setup', icon: '🧸',
+    desc: '14 checks: adapting childproofing to the new floor plan, stair gates, balcony and railing gaps, window fall-prevention, and furniture and appliance anchoring for the new space.',
+    checks: [
+      { id:'nh57', num:'NH57', risk:'critical', title:'Installing Stair Gates Before Children Explore the New Layout',
+        who:'Households with young children and any staircase in the new home',
+        what:'Children exploring a new, unfamiliar staircase before a stair gate is installed',
+        where:'Top and bottom of every staircase',
+        why:'An unfamiliar staircase in a new home carries a higher fall risk for young children than one they have grown used to over time, making early installation particularly important',
+        how:'Install a properly fitted stair gate at both the top and bottom of every staircase before young children are given unsupervised access to the new layout',
+        measurement:'Recognised child safety guidance recommends stair gates fitted at both the top and bottom of stairs in any household with young children.',
+        example:'A family installs stair gates on their first day in the new home, before unpacking most of the boxes, specifically because their toddler does not yet know the layout.',
+        tip:'Prioritise this over unpacking — a new, unfamiliar staircase is exactly the situation where a gate matters most in the first days.' },
+
+      { id:'nh58', num:'NH58', risk:'high', title:'Checking Balcony and Railing Gaps Meet Child-Safe Spacing',
+        who:'Households with young children and any balcony or elevated railing',
+        what:'Gaps between balusters or railing components wide enough for a young child to fit through or become stuck',
+        where:'Any balcony, staircase railing, or elevated barrier',
+        why:'Wide gaps in railings are a well-documented fall and entrapment risk for young children, and gap spacing varies between older and newer construction',
+        how:'Measure gaps between balusters and, where they exceed a child-safe width, add a mesh guard or barrier until a permanent fix is possible',
+        measurement:'Common child-safety guidance recommends no more than approximately 10 cm [4 in] between railing balusters, though this can vary by local building standard.',
+        example:'A family measures the gaps on their new apartment\'s balcony railing and adds a mesh safety guard after finding them wider than the recommended spacing.',
+        tip:'A simple tape measure check takes only a few minutes and gives a clear, objective answer rather than relying on a visual guess.' },
+
+      { id:'nh59', num:'NH59', risk:'high', title:'Installing Window Restrictors or Guards for Fall Prevention',
+        who:'Households with young children and windows above ground level',
+        what:'Upper-floor windows that open fully, without a restrictor limiting how far a child could climb through',
+        where:'Upper-floor windows, particularly in bedrooms and play areas',
+        why:'Falls from windows are a serious, well-documented risk for young children, and window restrictors are a straightforward, effective control',
+        how:'Fit window restrictors limiting opening width on upper-floor windows accessible to children, while still allowing the window to serve as an emergency exit if the restrictor has a quick-release function',
+        measurement:'Recognised child safety guidance recommends window restrictors limiting opening to approximately 10 cm [4 in] on upper floors accessible to children.',
+        example:'A family fits window restrictors in their child\'s new upper-floor bedroom during the first week, choosing a type with an adult quick-release for emergencies.',
+        tip:'Choose a restrictor with a quick-release mechanism so the window can still serve as an emergency exit for an adult if genuinely needed.' },
+
+      { id:'nh60', num:'NH60', risk:'critical', title:'Anchoring Furniture and Appliances to Walls in Every Room',
+        who:'Households with young children, particularly toddlers who climb',
+        what:'Tall or top-heavy furniture and freestanding appliances not yet anchored to the wall in the new home',
+        where:'Every room with tall furniture, shelving, or freestanding appliances',
+        why:'Furniture tip-overs are a recognised and serious cause of injury to young children who climb on drawers or shelving, and unanchored furniture in a new, unfamiliar layout is a foreseeable risk',
+        how:'Anchor tall or top-heavy furniture and freestanding appliances to a wall stud using an anti-tip strap or bracket before children have unsupervised access to the room',
+        measurement:'Recognised child safety guidance identifies furniture and appliance anchoring as an essential control against tip-over injury in households with young children.',
+        example:'A family anchors a tall bookshelf and a chest of drawers in their new home before unpacking books onto the shelves, treating it as a priority task rather than an afterthought.',
+        tip:'Anti-tip straps are inexpensive and quick to fit — do this before furniture is fully loaded with belongings, while it is still easy to move and access the back.' },
+
+      { id:'nh61', num:'NH61', risk:'medium', title:'Reassessing Furniture Layout for New Room Dimensions',
+        who:'The household arranging furniture in the new home',
+        what:'Furniture arranged to fit the old home\'s layout, creating awkward pathways, blocked exits, or tip hazards in the new, differently shaped rooms',
+        where:'Every room being furnished',
+        why:'A furniture layout that made sense in a previous home may create a trip hazard, block an escape route, or crowd a walkway in a differently shaped new room',
+        how:'Plan furniture placement around the new room\'s actual dimensions and exits, checking that pathways stay clear and no furniture blocks a door or window escape route',
+        measurement:'Recognised home safety guidance recommends furniture layouts that preserve clear pathways and unobstructed escape routes, reassessed for each new space.',
+        example:'A family realises their old living room layout would block a window escape route in the new home and rearranges the furniture before settling in.',
+        tip:'Walk the planned pathways with your eyes closed, or in the dark, once furniture is placed — it is a quick way to spot an unexpected obstacle.' },
+
+      { id:'nh62', num:'NH62', risk:'medium', title:'Childproofing Cabinets and Drawers in the New Kitchen',
+        who:'Households with young children',
+        what:'Kitchen cabinets and drawers containing sharp objects, cleaning products, or small parts, not yet secured in the new layout',
+        where:'Kitchen cabinets and drawers',
+        why:'A new kitchen layout means childproofing has to be reassessed from scratch, since cabinet contents and heights differ from the previous home',
+        how:'Install cabinet and drawer locks on any storage containing sharp objects, cleaning products, or choking hazards, reachable by young children in the new layout',
+        measurement:'Recognised child safety guidance recommends securing cabinets containing hazardous or unsafe items wherever they are reachable by young children.',
+        example:'A family childproofs the lower kitchen cabinets in their new home during the first week, having learned the new layout puts cleaning products within a toddler\'s reach.',
+        tip:'Do a "toddler\'s-eye view" walkthrough, getting down to a child\'s height, to spot what is actually reachable in the new kitchen.' },
+
+      { id:'nh63', num:'NH63', risk:'medium', title:'Checking Bathroom Safety Features in the New Layout',
+        who:'Households with young children or older adults',
+        what:'Bathroom safety features such as non-slip mats, grab bars, or toilet locks not yet set up in the new bathroom',
+        where:'Every bathroom in the home',
+        why:'Bathrooms are a common location for household falls, and a new, unfamiliar layout needs its own safety setup rather than assuming the previous home\'s arrangement transfers over',
+        how:'Add non-slip mats in the tub or shower, consider grab bars where needed for older adults, and add a toilet lock if young children are in the household',
+        measurement:'Recognised home safety guidance identifies non-slip surfaces and, where relevant, grab bars and secured toilet lids as basic bathroom safety measures.',
+        example:'A family adds a non-slip bath mat and a toilet lock to their new bathroom during the first weekend, having learned the previous home\'s bathroom did not need either.',
+        tip:'Test the actual floor surface of the new bathroom when wet — some flooring is noticeably more slippery than others.' },
+
+      { id:'nh64', num:'NH64', risk:'medium', title:'Setting Up a Safe Sleep Space in the New Bedroom',
+        who:'Households with an infant or young child',
+        what:'A sleep space set up in a new room without reassessing it against safe sleep guidance',
+        where:'The infant or young child\'s new bedroom',
+        why:'A new room can introduce different hazards — a nearby window, a different crib placement, or new furniture — that need checking against safe sleep guidance rather than assuming the previous setup transfers directly',
+        how:'Set up the crib or sleep space away from windows, blind cords, and furniture that could be climbed, following recognised safe sleep placement guidance for the new room',
+        measurement:'Recognised safe sleep guidance identifies crib placement away from windows, cords, and climbable furniture as a basic safety requirement in any room.',
+        example:'A family repositions their infant\'s crib away from a window with a blind cord in the new nursery, having placed it differently in their previous home.',
+        tip:'Reassess the sleep space specifically for cords, windows, and nearby furniture — do not assume the same crib position that worked before is automatically safe in a new room.' },
+
+      { id:'nh65', num:'NH65', risk:'medium', title:'Checking Blind and Curtain Cord Safety in Every Room',
+        who:'Households with young children',
+        what:'Looped or accessible blind and curtain cords left within reach of young children in the new home',
+        where:'Every room with corded blinds or curtains',
+        why:'Looped cords are a well-documented strangulation risk for young children, and a new home\'s window treatments need the same check as any previous home',
+        how:'Check every room for looped or accessible blind and curtain cords, and install cord shorteners, cleats, or cordless alternatives wherever children can reach them',
+        measurement:'Recognised child safety guidance identifies securing or removing accessible looped cords as an essential safety step in households with young children.',
+        example:'A family finds looped cords on the blinds in their new child\'s bedroom and installs cord cleats the same day, before the crib is even in place.',
+        tip:'Check every room, not just the child\'s bedroom — children spend time throughout the home, and any accessible cord is a risk regardless of which room it is in.' },
+
+      { id:'nh66', num:'NH66', risk:'low', title:'Identifying Choking Hazards Left Behind by Previous Occupants',
+        who:'Households with young children',
+        what:'Small items left behind by previous occupants — screws, small hardware, forgotten small objects — not yet checked for choking hazard risk',
+        where:'Floors, corners, and overlooked spaces throughout the home',
+        why:'A previous occupant\'s belongings or maintenance leftovers can introduce small-object choking hazards that would not exist in a home the household has always lived in',
+        how:'Do a floor-level sweep of every room for small items before young children have unsupervised access, particularly in corners and behind furniture',
+        measurement:'Recognised child safety guidance recommends a small-object floor check in any new environment before young children explore it independently.',
+        example:'A family finds several small screws left behind near a mounted shelf bracket and removes them before their crawling baby explores that room.',
+        tip:'Get down to floor level yourself for this check — a standing sweep misses items that are only visible from a child\'s perspective.' },
+
+      { id:'nh67', num:'NH67', risk:'medium', title:'Checking Fireplace or Wood Stove Safety in the New Home',
+        who:'Households with a fireplace or wood-burning stove',
+        what:'A fireplace or wood stove not checked for a secure guard, chimney condition, or safe clearance from furniture',
+        where:'Any room with a fireplace or wood-burning stove',
+        why:'Fireplaces present both a burn risk for young children and a fire risk if the chimney or clearance has not been checked, and a new home needs its own assessment',
+        how:'Install a secure fireplace guard if young children are in the household, check chimney condition or servicing history, and confirm safe clearance from furniture and flammable materials',
+        measurement:'Recognised fire safety guidance recommends a serviced chimney and physical barrier around any fireplace or wood stove accessible to young children.',
+        example:'A family adds a fireplace guard to their new living room before their toddler has access, and arranges a chimney check given no service history was available.',
+        tip:'If chimney servicing history is unavailable, treat a first check as a sensible move-in task rather than an optional extra.' },
+
+      { id:'nh68', num:'NH68', risk:'medium', title:'Setting Up a Safe Play Area Away from Hazards',
+        who:'Households with young children',
+        what:'No designated safe play area established yet in the new home, with children exploring wherever unpacking has left space',
+        where:'A chosen room or area for regular child play',
+        why:'A deliberately chosen, hazard-checked play area gives children a genuinely safe default space during the busy, hazard-heavy unpacking period',
+        how:'Choose a specific room or area for regular play, check it specifically for the hazards covered elsewhere in this zone, and use it as the default supervised space during unpacking',
+        measurement:'Recognised child safety guidance supports establishing a dedicated, hazard-checked play space, particularly during high-disruption periods like moving.',
+        example:'A family sets up a corner of the living room as a checked, safe play area for their toddler during the weeks of ongoing unpacking, rather than letting play happen wherever boxes are being opened.',
+        tip:'Revisit this designated area\'s safety each time major unpacking happens nearby, since new hazards can appear as boxes are opened.' },
+
+      { id:'nh69', num:'NH69', risk:'low', title:'Introducing Children to the New Layout Calmly Before Full Unpacking',
+        who:'Households with children old enough to explore independently',
+        what:'Children left to discover the new home\'s layout entirely on their own, without any guided introduction to where things are and what to be careful of',
+        where:'Applies to the whole home layout',
+        why:'A calm, guided introduction helps children build an accurate mental map of the new home, including where hazards and safety features are, faster than unguided exploration alone',
+        how:'Walk through the new home together as a family in the first days, pointing out safety features like the meeting point and any areas that need extra care',
+        measurement:'Recognised child safety and developmental guidance supports guided orientation to a new environment as helpful for both safety and emotional adjustment.',
+        example:'A family walks their children through the whole new home on the first evening, showing them the family meeting point and talking calmly about the new layout.',
+        tip:'Frame this as an exciting exploration of their new home rather than a list of warnings — the tone matters as much as the content for young children.' },
+
+      { id:'nh70', num:'NH70', risk:'medium', title:'Reviewing Pet Safety Considerations for the New Space',
+        who:'Households with pets moving into the new home',
+        what:'Pet-specific hazards in the new home and garden — toxic plants, gaps in fencing, unfamiliar balconies — not yet reviewed',
+        where:'Applies to the home and any outdoor space accessible to pets',
+        why:'A new home can introduce pet-specific hazards that did not exist in the previous home, and pets, like children, benefit from a deliberate safety check of their new environment',
+        how:'Check the garden for toxic plants, confirm fencing and gates are secure for the pet\'s size, and check balconies or open windows for fall risk if the household includes cats or small pets',
+        measurement:'Recognised pet safety guidance recommends checking for toxic plants and secure containment whenever a pet moves to a new environment.',
+        example:'A family checks their new garden for a toxic plant identified on a pet safety resource and removes it before letting their dog explore unsupervised.',
+        tip:'Treat this the same way you would treat childproofing — a specific, deliberate check of the new space rather than assuming the pet will simply be fine.' }
+    ]
+  },
+  {
+    id: 6, name: 'Documentation, Move-In Record & Rental Considerations', icon: '📋',
+    desc: '14 checks: a photographic and written move-in record, understanding how safety-maintenance responsibilities are typically split between tenants and landlords, reviewing insurance, and recording emergency provider details. Rental and tenancy law varies by location — this section is general safety guidance, not legal advice; for a specific tenant or landlord question, consult your local regulations or a qualified professional.',
+    checks: [
+      { id:'nh71', num:'NH71', risk:'high', title:'Photographing Every Room\'s Condition on Move-In Day',
+        who:'Every household moving in, whether owning or renting',
+        what:'The condition of each room not documented before belongings are unpacked and the space starts to change',
+        where:'Every room, including storage areas, garage, and outdoor spaces',
+        why:'A dated photographic record of the home\'s condition on move-in day is the clearest possible evidence if any dispute over existing damage arises later, particularly for renters',
+        how:'Photograph every room, including corners, floors, walls, and any existing damage, on move-in day before unpacking changes the space, and store the photos with a clear date',
+        measurement:'Recognised move-in documentation guidance recommends comprehensive, dated photographs taken before belongings are unpacked.',
+        example:'A family photographs every room of their new rental, including close-ups of an existing scuff mark on the hallway wall, before moving in a single box.',
+        tip:'Photograph general views of each room plus close-ups of any existing damage — both are useful, and neither replaces the other.' },
+
+      { id:'nh72', num:'NH72', risk:'medium', title:'Understanding the General Tenant vs Landlord Safety-Maintenance Split',
+        who:'Renting households',
+        what:'Uncertainty about which safety-related maintenance tasks are typically the tenant\'s responsibility and which are typically the landlord\'s',
+        where:'Applies to the overall rental arrangement',
+        why:'A general understanding of how safety-maintenance responsibility is typically divided helps a renting household know what to report and to whom, and avoids assuming an issue is either party\'s job without checking',
+        how:'As a general pattern, tasks like testing alarms and reporting hazards are commonly a tenant\'s responsibility, while structural repairs, gas and electrical safety certification, and major system servicing are commonly a landlord\'s responsibility — but this varies by location, so check the specific lease and local regulations',
+        measurement:'This is general, non-legal safety guidance only; rental and tenancy law varies by location, and specific tenant or landlord responsibilities should be confirmed against the lease and local regulations, or with a qualified professional.',
+        example:'A renting family reports a broken smoke alarm to their landlord promptly, understanding that reporting the fault is their role while arranging the fix may fall to the landlord under their specific lease.',
+        tip:'When in doubt about who is responsible for a specific safety issue, report it in writing promptly regardless — a written report protects everyone and starts the process moving.' },
+
+      { id:'nh73', num:'NH73', risk:'medium', title:'Recording Utility Provider Contact Details in One Place',
+        who:'Every household setting up a new home',
+        what:'Utility provider details scattered across paperwork, apps, and memory rather than gathered in one accessible place',
+        where:'Applies to electricity, gas, water, and any other utility provider',
+        why:'Having every utility provider\'s details in one place makes it far faster to report an outage, a fault, or a billing issue when it actually happens',
+        how:'Gather the electricity, gas, water, and any other relevant utility provider\'s details into a single document or the personalised cheat sheet in this checklist',
+        measurement:'Recognised household organisation guidance recommends a single, accessible record of all utility provider contact details.',
+        example:'A family compiles all their new home\'s utility provider details into one page during their first week, rather than searching for each one separately when a question arises later.',
+        tip:'Update this record immediately if you ever switch providers, so it never falls out of date.' },
+
+      { id:'nh74', num:'NH74', risk:'critical', title:'Recording the Location of Every Emergency Shutoff',
+        who:'Every household member, especially anyone who might need to respond in an emergency alone',
+        what:'The shutoff locations identified earlier in this checklist not written down anywhere accessible in an emergency',
+        where:'Applies to the main water, gas, and electrical shutoffs identified in earlier zones',
+        why:'In a genuine emergency, a written record removes any uncertainty about where to go, which matters most exactly when stress is highest and memory is least reliable',
+        how:'Write down the exact location of the main water, gas, and electrical shutoffs on the personalised cheat sheet in this checklist, and make sure every adult and capable older child knows where to find this record',
+        measurement:'Recognised emergency preparedness guidance recommends a written, accessible record of all emergency shutoff locations.',
+        example:'A family writes the exact shutoff locations on their cheat sheet the same day they locate them, rather than relying on memory alone months later.',
+        tip:'A written record only helps if people know where to find it — keep it somewhere obvious and mention its location to every household member.' },
+
+      { id:'nh75', num:'NH75', risk:'medium', title:'Reviewing Renters or Home Insurance Coverage',
+        who:'Every household, whether renting or owning',
+        what:'Insurance coverage not reviewed or updated to reflect the new home and its contents',
+        where:'Applies to the household\'s insurance policy',
+        why:'A policy that does not reflect the new address, home type, or contents may leave genuine gaps in coverage exactly when it would matter most',
+        how:'Review or arrange renters or home insurance coverage specific to the new home, checking that contents, structure (if applicable), and liability coverage reflect the actual situation',
+        measurement:'Recognised household financial safety guidance recommends reviewing insurance coverage at every home move to confirm it matches the new circumstances.',
+        example:'A family renting a new flat arranges renters insurance during their first week, having not had a policy at their previous shared accommodation.',
+        tip:'Keep a copy of the policy and the insurer\'s contact details alongside your other move-in documentation and your personalised cheat sheet.' },
+
+      { id:'nh76', num:'NH76', risk:'medium', title:'Building a New-Home Emergency Contact Sheet',
+        who:'Every household member',
+        what:'No single, accessible emergency contact sheet built for the new home and its specific circumstances',
+        where:'Kept in an obvious, accessible location in the home',
+        why:'A single, up-to-date emergency contact sheet allows anyone in the household, or a visitor, to quickly find key information without searching multiple sources',
+        how:'Build an emergency contact sheet covering emergency services, utility providers, a locksmith, the landlord or property manager if renting, and household-specific information, using the personalised cheat sheet in this checklist',
+        measurement:'Recognised emergency preparedness guidance recommends a readily accessible emergency contact sheet in every home.',
+        example:'A family builds their emergency contact sheet during their first weekend, printing a copy for the refrigerator door and keeping a digital copy on their phones.',
+        tip:'Review and update this sheet whenever a contact changes, such as a new landlord, insurer, or utility provider.' },
+
+      { id:'nh77', num:'NH77', risk:'medium', title:'Keeping Copies of the Lease or Purchase Documentation Accessible',
+        who:'Every household, whether renting or owning',
+        what:'Lease or purchase documentation stored only in one place, or not easily accessible when a question arises',
+        where:'Applies to the household\'s key legal and financial documentation',
+        why:'Having the lease or purchase documentation accessible, including both a physical and digital copy, makes it far easier to check specific terms quickly when a question comes up',
+        how:'Keep a physical copy of the lease or purchase documentation in an accessible file, and store a digital copy as backup',
+        measurement:'Recognised household organisation guidance recommends keeping key legal documentation both physically and digitally accessible.',
+        example:'A renting family scans their lease agreement and saves a digital copy alongside a physical copy in their move-in file, so either is easy to find later.',
+        tip:'A photo of key documentation pages on your phone is a simple, immediate backup even before a more thorough filing system is set up.' },
+
+      { id:'nh78', num:'NH78', risk:'low', title:'Noting Any Pre-Existing Damage in Writing, Not Just Photos',
+        who:'Renting households in particular',
+        what:'Existing damage documented only through photographs, without a brief written description accompanying each item',
+        where:'Applies to any pre-existing damage identified during the move-in walkthrough',
+        why:'A brief written note alongside a photo clarifies exactly what the damage is and where, which can be genuinely helpful if a photo alone is ambiguous later',
+        how:'For each piece of pre-existing damage photographed, add a short written note describing what it is and its exact location',
+        measurement:'Recognised move-in documentation guidance recommends pairing photographic evidence with a brief written description for clarity.',
+        example:'A family notes "small scuff, hallway wall, roughly waist height, near the light switch" alongside their photo of the mark, rather than relying on the photo alone.',
+        tip:'Written notes are especially useful for damage that is subtle in a photo, such as a small crack or a faint stain.' },
+
+      { id:'nh79', num:'NH79', risk:'medium', title:'Confirming Move-In Safety Inspection Checklist Was Completed',
+        who:'The household coordinating the move-in process',
+        what:'This checklist\'s core safety zones not yet fully worked through, with documentation happening ahead of the actual safety checks',
+        where:'Applies to the household\'s overall move-in process',
+        why:'Documentation is most valuable when it reflects checks that have genuinely been completed, rather than being filled in as a formality ahead of the actual safety work',
+        how:'Confirm that the safety checks in the earlier zones have actually been completed before considering the move-in safety process finished, using this checklist\'s own progress tracker',
+        measurement:'This checklist\'s own progress bar and zone counters provide a straightforward way to confirm completion across all zones.',
+        example:'A family checks their progress bar at the end of their first month and completes two remaining checks that had been overlooked.',
+        tip:'Use the progress bar at the top of this checklist as your simplest confirmation that the whole move-in safety process is genuinely complete.' },
+
+      { id:'nh80', num:'NH80', risk:'medium', title:'Setting a Reminder to Review the Home Again After the First Season Change',
+        who:'Every household in the new home',
+        what:'A one-time move-in safety check treated as permanently sufficient, without any planned follow-up review',
+        where:'Applies to the whole home',
+        why:'Some issues — a seasonal draft, a heating system under real load, a garden hazard that only appears at a different time of year — only become apparent once conditions change from move-in day',
+        how:'Set a reminder to revisit key safety checks, particularly heating, ventilation, and any outdoor hazards, after the home has been through a full change in weather conditions',
+        measurement:'Recognised home safety guidance recommends a follow-up review once a home has been experienced through a genuine change in conditions, not just at move-in.',
+        example:'A family sets a reminder to check their heating system and look for any new drafts once colder weather arrives, several months after moving in during a milder period.',
+        tip:'This follow-up review does not need to repeat every check — focus on anything that is genuinely conditions-dependent, like heating, drainage, or garden hazards.' },
+
+      { id:'nh81', num:'NH81', risk:'low', title:'Sharing Emergency Information with All Household Members',
+        who:'Every household member, including children old enough to understand',
+        what:'Emergency information built and stored, but not actually shared with or understood by every household member',
+        where:'Applies to the whole household',
+        why:'Emergency information only helps in the moment if the people who need it know it exists and roughly what it contains',
+        how:'Walk through the emergency contact sheet, shutoff locations, and escape plan with every household member, including age-appropriate detail for children',
+        measurement:'Recognised household safety guidance recommends actively sharing, not just creating, household emergency information.',
+        example:'A family sits down together during their first month to walk through the emergency sheet and escape plan as a group, rather than assuming everyone will find it if needed.',
+        tip:'A short, calm family conversation covers this well — it does not need to feel like a formal briefing to be effective.' },
+
+      { id:'nh82', num:'NH82', risk:'medium', title:'Registering Utilities and Address Changes Promptly',
+        who:'Every household moving into a new home',
+        what:'Utility accounts, official records, and important services not yet updated with the new address',
+        where:'Applies to utility providers, financial institutions, and other services with the household\'s address on file',
+        why:'Prompt address updates help ensure bills, official correspondence, and emergency-relevant information reach the household without delay or disruption',
+        how:'Update the household\'s address with utility providers, financial institutions, healthcare providers, and other relevant services promptly after moving in',
+        measurement:'Recognised household organisation guidance recommends prompt address updates across all relevant accounts and services after a move.',
+        example:'A family works through a simple checklist of accounts needing an address update during their first two weeks, rather than updating them piecemeal as issues arise.',
+        tip:'Keep a simple running list of accounts as you update each one, so it is easy to confirm nothing was missed.' },
+
+      { id:'nh83', num:'NH83', risk:'low', title:'Keeping a Digital Backup of All Move-In Documentation',
+        who:'Every household completing this checklist',
+        what:'Move-in photographs, notes, and documentation stored only in one physical location or a single device',
+        where:'Applies to all documentation gathered throughout this checklist',
+        why:'A digital backup protects the household\'s move-in record even if a physical copy is lost, damaged, or a single device fails',
+        how:'Back up move-in photographs and documentation to a second location, such as cloud storage or a separate device, rather than relying on a single copy',
+        measurement:'Recognised household organisation guidance recommends backing up important documentation in more than one location.',
+        example:'A family uploads their move-in photos and documentation to cloud storage the same week they take them, rather than leaving them only on one phone.',
+        tip:'Do the backup as soon as possible after taking move-in photos — it is easy to forget once the busy unpacking period is underway.' },
+
+      { id:'nh84', num:'NH84', risk:'medium', title:'Reflecting on Building Safety Habits as Part of a Fresh Start',
+        who:'The whole household',
+        what:'The safety habits built during move-in treated as a one-time task rather than the beginning of an ongoing practice',
+        where:'Applies to the household\'s overall approach to home safety going forward',
+        why:'A new home is a genuine opportunity to build good safety habits from day one, and recognising this checklist as the start of an ongoing practice, not a box-ticking exercise, makes those habits more likely to stick',
+        how:'Take a moment as a household to recognise the safety habits built during move-in, and treat regular alarm testing, emergency plan reviews, and ongoing awareness as a normal part of life in the new home going forward',
+        measurement:'Recognised home safety guidance describes habit formation, rather than a single inspection, as what sustains genuine household safety over time.',
+        example:'A family marks the completion of their move-in safety checklist with a small celebration, treating it as the start of good habits in their new home rather than a finished task to forget about.',
+        tip:'A new home is an exciting fresh start — building safety habits now, while everything is still new, is one of the easiest times to make them stick for good.' }
+    ]
+  }
+];
+
+const STORE_KEY = 'safelife-newhome-pro';
+const completed = new Set();
+let lang = 'en', theme = 'eucalyptus', mode = 'light', riskFilter = null, activeZone = 1;
+const TOTAL = 84;
+
+function t(key){ return (I18N[lang] && I18N[lang][key]) || I18N.en[key] || key; }
+function persist(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify({completed:[...completed], lang, theme, mode})); }catch(e){}
+}
+function restore(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(!raw) return;
+    const d = JSON.parse(raw);
+    (d.completed||[]).forEach(id=>completed.add(id));
+    if(false && d.lang && I18N[d.lang]) lang = d.lang; /* language switching disabled for English-only release — remove "false &&" to re-enable */
+    if(d.theme) theme = d.theme;
+    if(d.mode) mode = d.mode;
+  }catch(e){}
+}
+
+// ═══════════════════════════════════════════
+// PROGRESS & STATS
+// ═══════════════════════════════════════════
+function updateProgress(){
+  const done = completed.size;
+  document.getElementById('topbar-done').textContent = done;
+  document.getElementById('progress-count').textContent = done + ' ' + t('ofWord') + ' ' + TOTAL;
+  document.getElementById('progress-fill').style.width = (done/TOTAL*100) + '%';
+  ZONES.forEach(z=>{
+    const zDone = z.checks.filter(c=>completed.has(c.id)).length;
+    document.getElementById('ztc-'+z.id).textContent = zDone + '/14';
+  });
+  document.getElementById('celebrate').classList.toggle('show', done === TOTAL);
+  persist();
+}
+function fillStats(){
+  const counts = {critical:0,high:0,medium:0,low:0};
+  ZONES.forEach(z=>z.checks.forEach(c=>counts[c.risk]++));
+  ['critical','high','medium','low'].forEach(r=>{ document.getElementById('s-'+r).textContent = counts[r]; });
+}
+
+// ═══════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════
+function buildCard(check){
+  const card = document.createElement('div');
+  card.className = 'check-card' + (completed.has(check.id) ? ' completed' : '');
+  card.dataset.id = check.id;
+  card.dataset.risk = check.risk;
+  card.innerHTML =
+    '<div class="check-header">' +
+      '<div class="check-checkbox">' + (completed.has(check.id) ? '✓' : '') + '</div>' +
+      '<div class="check-num">' + check.num + '</div>' +
+      '<div class="check-risk risk-' + check.risk + '">' + t(check.risk) + '</div>' +
+      '<div class="check-title">' + check.title + '</div>' +
+      '<div class="check-chevron">▼</div>' +
+    '</div>' +
+    '<div class="check-detail">' +
+      '<div class="detail-grid">' +
+        '<div class="detail-item"><div class="detail-label"><span>👤</span>' + t('who') + '</div><div class="detail-value">' + check.who + '</div></div>' +
+        '<div class="detail-item"><div class="detail-label"><span>⚠️</span>' + t('what') + '</div><div class="detail-value">' + check.what + '</div></div>' +
+        '<div class="detail-item"><div class="detail-label"><span>📍</span>' + t('where') + '</div><div class="detail-value">' + check.where + '</div></div>' +
+        '<div class="detail-item"><div class="detail-label"><span>❓</span>' + t('why') + '</div><div class="detail-value">' + check.why + '</div></div>' +
+        '<div class="detail-item full"><div class="detail-label"><span>🔧</span>' + t('how') + '</div><div class="detail-value">' + check.how + '</div></div>' +
+      '</div>' +
+      '<div class="measurement-box"><strong>📏 ' + t('standards') + '</strong>' + check.measurement + '</div>' +
+      '<div class="detail-item full" style="margin-top:10px;"><div class="detail-label"><span>💬</span>' + t('example') + '</div><div class="detail-value">' + check.example + '</div></div>' +
+      '<div class="tip-box"><span class="tip-icon">💡</span><span class="tip-text"><strong>' + t('quickTip') + ':</strong> ' + check.tip + '</span></div>' +
+    '</div>';
+  card.querySelector('.check-header').addEventListener('click', function(){ card.classList.toggle('open'); });
+  card.querySelector('.check-checkbox').addEventListener('click', function(e){
+    e.stopPropagation();
+    if(completed.has(check.id)){ completed.delete(check.id); card.classList.remove('completed'); this.textContent=''; }
+    else { completed.add(check.id); card.classList.add('completed'); this.textContent='✓'; }
+    updateProgress();
+  });
+  return card;
+}
+
+function renderAll(){
+  document.querySelectorAll('.zone-panel').forEach(p=>p.remove());
+  const main = document.getElementById('main-content');
+  ZONES.forEach(z=>{
+    const panel = document.createElement('div');
+    panel.className = 'zone-panel' + (z.id === activeZone ? ' active' : '');
+    panel.id = 'zone-panel-' + z.id;
+    const header = document.createElement('div');
+    header.className = 'zone-header';
+    header.innerHTML = '<div class="zone-icon">' + (ICONS['z'+z.id] || z.icon) + '</div><div class="zone-header-text"><h2>' + t('z'+z.id) + '</h2><p>' + t('zd'+z.id) + '</p></div>';
+    panel.appendChild(header);
+    const actions = document.createElement('div');
+    actions.className = 'zone-actions';
+    const bExpand = document.createElement('button'); bExpand.className='btn btn-outline'; bExpand.textContent=t('expandAll');
+    const bCollapse = document.createElement('button'); bCollapse.className='btn btn-outline'; bCollapse.textContent=t('collapseAll');
+    const bUnmark = document.createElement('button'); bUnmark.className='btn btn-outline'; bUnmark.textContent=t('unmarkAll');
+    const bMark = document.createElement('button'); bMark.className='btn btn-primary'; bMark.textContent=t('markAll');
+    actions.append(bExpand,bCollapse,bUnmark,bMark);
+    panel.appendChild(actions);
+    const list = document.createElement('div');
+    list.className = 'checks-list';
+    z.checks.forEach(c=>list.appendChild(buildCard(c)));
+    panel.appendChild(list);
+    const disc = document.createElement('div');
+    disc.className = 'zone-disclaimer';
+    disc.textContent = '⚕ ' + t('disclaimer');
+    panel.appendChild(disc);
+    bExpand.addEventListener('click', ()=>list.querySelectorAll('.check-card').forEach(c=>c.classList.add('open')));
+    bCollapse.addEventListener('click', ()=>list.querySelectorAll('.check-card').forEach(c=>c.classList.remove('open')));
+    bMark.addEventListener('click', ()=>{ z.checks.forEach(c=>completed.add(c.id)); refreshCards(list); });
+    bUnmark.addEventListener('click', ()=>{ z.checks.forEach(c=>completed.delete(c.id)); refreshCards(list); });
+    main.appendChild(panel);
+  });
+  applyFilters();
+  updateProgress();
+}
+function refreshCards(list){
+  list.querySelectorAll('.check-card').forEach(card=>{
+    const done = completed.has(card.dataset.id);
+    card.classList.toggle('completed', done);
+    card.querySelector('.check-checkbox').textContent = done ? '✓' : '';
+  });
+  updateProgress();
+}
+
+// ═══════════════════════════════════════════
+// ZONES / SEARCH / FILTERS
+// ═══════════════════════════════════════════
+function switchZone(id){
+  activeZone = id;
+  document.querySelectorAll('.zone-tab').forEach(tab=>tab.classList.toggle('active', +tab.dataset.zone === id));
+  document.querySelectorAll('.zone-panel').forEach(p=>p.classList.toggle('active', p.id === 'zone-panel-' + id));
+}
+document.querySelectorAll('.zone-tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{ document.getElementById('search-input').value=''; applyFilters(); switchZone(+tab.dataset.zone); });
+});
+document.querySelectorAll('.hero-badge[data-zone]').forEach(badge=>{
+  badge.addEventListener('click', ()=>{
+    switchZone(+badge.dataset.zone);
+    document.getElementById('zone-tabs').scrollIntoView({behavior:'smooth'});
+  });
+});
+document.querySelectorAll('.stat-pill[data-risk]').forEach(pill=>{
+  pill.addEventListener('click', ()=>{
+    riskFilter = (riskFilter === pill.dataset.risk) ? null : pill.dataset.risk;
+    document.querySelectorAll('.stat-pill[data-risk]').forEach(p=>p.classList.toggle('filter-on', p.dataset.risk === riskFilter));
+    applyFilters();
+  });
+});
+document.getElementById('search-input').addEventListener('input', applyFilters);
+
+function applyFilters(){
+  const q = document.getElementById('search-input').value.trim().toLowerCase();
+  const searching = q.length > 0;
+  let anyVisible = false;
+  ZONES.forEach(z=>{
+    const panel = document.getElementById('zone-panel-' + z.id);
+    if(!panel) return;
+    let zoneVisible = 0;
+    panel.querySelectorAll('.check-card').forEach(card=>{
+      const check = z.checks.find(c=>c.id === card.dataset.id);
+      const text = (check.title+' '+check.who+' '+check.what+' '+check.where+' '+check.why+' '+check.how+' '+check.measurement+' '+check.example+' '+check.tip).toLowerCase();
+      const matchQ = !searching || text.includes(q);
+      const matchR = !riskFilter || check.risk === riskFilter;
+      const show = matchQ && matchR;
+      card.style.display = show ? '' : 'none';
+      if(show) zoneVisible++;
+    });
+    if(searching || riskFilter){
+      panel.classList.toggle('active', zoneVisible > 0);
+      panel.querySelector('.zone-actions').style.display = 'none';
+    } else {
+      panel.classList.toggle('active', z.id === activeZone);
+      panel.querySelector('.zone-actions').style.display = '';
+    }
+    if(zoneVisible > 0) anyVisible = true;
+  });
+  document.getElementById('search-no-results').style.display = (searching || riskFilter) && !anyVisible ? 'block' : 'none';
+}
+
+// ═══════════════════════════════════════════
+// THEMES / MODE / LANGUAGE
+// ═══════════════════════════════════════════
+const THEMES = [
+  {id:'eucalyptus', name:'Eucalyptus Fresh', c:'#5E9C82'},
+  {id:'periwinkle', name:'Periwinkle Calm', c:'#7680B5'},
+  {id:'teal',   name:'Teal Calm',     c:'#14B8A6'},
+  {id:'amber',  name:'Warm Amber',    c:'#F59E0B'},
+  {id:'rose',   name:'Rose Care',     c:'#E11D48'},
+  {id:'violet', name:'Gentle Violet', c:'#7C3AED'},
+  {id:'ocean',  name:'Ocean Blue',    c:'#2563EB'},
+  {id:'forest', name:'Forest Green',  c:'#16A34A'}
+];
+function buildThemeMenu(){
+  const dd = document.getElementById('dd-theme');
+  dd.innerHTML = '<div class="dropdown-title">' + t('theme') + '</div>';
+  THEMES.forEach(th=>{
+    const row = document.createElement('button');
+    row.className = 'theme-row' + (th.id === theme ? ' selected' : '');
+    row.innerHTML = '<span class="theme-swatch" style="background:' + th.c + '"></span>' + th.name + (th.id === theme ? '<span class="check-mark">✓</span>' : '');
+    row.addEventListener('click', e=>{
+      e.stopPropagation();
+      theme = th.id;
+      document.body.dataset.theme = theme;
+      buildThemeMenu(); persist();
+    });
+    dd.appendChild(row);
+  });
+}
+function buildLangMenu(){
+  const dd = document.getElementById('dd-lang');
+  dd.innerHTML = '<div class="dropdown-title">🌐 Language</div>';
+  Object.keys(I18N).forEach(code=>{
+    const row = document.createElement('button');
+    row.className = 'theme-row' + (code === lang ? ' selected' : '');
+    row.innerHTML = '<span style="font-weight:800;font-size:11px;color:var(--accent);min-width:22px;">' + code.toUpperCase() + '</span>' + I18N[code].name + (code === lang ? '<span class="check-mark">✓</span>' : '');
+    row.addEventListener('click', e=>{
+      e.stopPropagation();
+      lang = code;
+      applyLang(); renderAll(); buildLangMenu(); buildManual(); buildCheat(); buildCollection(); persist();
+    });
+    dd.appendChild(row);
+  });
+  const note = document.createElement('div');
+  note.style.cssText = 'font-size:10.5px;color:var(--ink-soft);padding:8px;max-width:230px;line-height:1.4;';
+  note.textContent = t('langNote');
+  dd.appendChild(note);
+}
+function applyLang(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ el.innerHTML = t(el.dataset.i18n); });
+  document.getElementById('search-input').placeholder = t('searchPh');
+  document.getElementById('lang-label').textContent = lang.toUpperCase();
+  document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+  document.documentElement.lang = lang;
+}
+function toggleDropdown(id, e){
+  e.stopPropagation();
+  const dd = document.getElementById(id);
+  const wasOpen = dd.classList.contains('open');
+  document.querySelectorAll('.dropdown').forEach(d=>d.classList.remove('open'));
+  if(!wasOpen) dd.classList.add('open');
+}
+document.getElementById('btn-theme').addEventListener('click', e=>toggleDropdown('dd-theme', e));
+document.getElementById('btn-lang').addEventListener('click', e=>toggleDropdown('dd-lang', e));
+document.addEventListener('click', ()=>document.querySelectorAll('.dropdown').forEach(d=>d.classList.remove('open')));
+document.getElementById('btn-mode').addEventListener('click', function(){
+  mode = mode === 'light' ? 'dark' : 'light';
+  document.body.dataset.mode = mode;
+  this.textContent = mode === 'light' ? '🌙' : '☀️';
+  persist();
+});
+
+// ═══════════════════════════════════════════
+// SAVE / LOAD PROGRESS
+// ═══════════════════════════════════════════
+document.getElementById('btn-save').addEventListener('click', ()=>{
+  const data = { product:'SafeLife', module:'newhome', version:1, savedAt:new Date().toISOString(), completed:[...completed], lang, theme, mode };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'SafeLife_NewHomeMoveIn_Progress_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+document.getElementById('btn-load').addEventListener('click', ()=>document.getElementById('load-file').click());
+document.getElementById('load-file').addEventListener('change', function(){
+  const file = this.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    try{
+      const d = JSON.parse(reader.result);
+      if(d.module !== 'newhome' && !confirm('This file was saved from a different module. Load anyway?')) return;
+      completed.clear();
+      (d.completed||[]).forEach(id=>completed.add(id));
+      if(false && d.lang && I18N[d.lang]) lang = d.lang; /* language switching disabled for English-only release — remove "false &&" to re-enable */
+      if(d.theme) theme = d.theme;
+      if(d.mode) mode = d.mode;
+      document.body.dataset.theme = theme;
+      document.body.dataset.mode = mode;
+      document.getElementById('btn-mode').textContent = mode === 'light' ? '🌙' : '☀️';
+      applyLang(); renderAll(); buildThemeMenu(); buildLangMenu(); persist();
+    }catch(e){ alert('Could not read that file — is it a SafeLife progress file?'); }
+  };
+  reader.readAsText(file);
+  this.value = '';
+});
+
+// ═══════════════════════════════════════════
+// MODALS / PRINT / NAV
+// ═══════════════════════════════════════════
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-close').forEach(b=>b.addEventListener('click', ()=>closeModal(b.dataset.close)));
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click', e=>{ if(e.target === o) o.classList.remove('open'); }));
+document.getElementById('btn-manual').addEventListener('click', ()=>openModal('modal-manual'));
+document.getElementById('btn-cheat').addEventListener('click', ()=>openModal('modal-cheat'));
+document.getElementById('btn-print').addEventListener('click', ()=>openModal('modal-print'));
+document.getElementById('btn-search').addEventListener('click', ()=>{
+  const s = document.getElementById('search-input');
+  s.scrollIntoView({behavior:'smooth', block:'center'});
+  setTimeout(()=>s.focus(), 350);
+});
+
+function doPrint(cls){
+  document.querySelectorAll('.modal-overlay').forEach(o=>o.classList.remove('open'));
+  const wasOpen = new Set([...document.querySelectorAll('.check-card.open')]);
+  document.querySelectorAll('.check-card').forEach(c=>c.classList.add('open'));
+  if(cls) document.body.classList.add(cls);
+  const cleanup = ()=>{
+    document.body.classList.remove('print-zone','print-cheat');
+    document.querySelectorAll('.check-card').forEach(c=>{ if(!wasOpen.has(c)) c.classList.remove('open'); });
+    window.removeEventListener('afterprint', cleanup);
+  };
+  window.addEventListener('afterprint', cleanup);
+  setTimeout(()=>window.print(), 60);
+}
+document.getElementById('print-all').addEventListener('click', ()=>doPrint(null));
+document.getElementById('print-zone').addEventListener('click', ()=>doPrint('print-zone'));
+document.getElementById('print-cheat2').addEventListener('click', ()=>doPrint('print-cheat'));
+document.getElementById('btn-print-cheat').addEventListener('click', ()=>doPrint('print-cheat'));
+
+function visibleCards(){
+  return [...document.querySelectorAll('.zone-panel.active .check-card')].filter(c=>c.style.display !== 'none');
+}
+function nearestCardIx(cards){
+  const mark = window.innerHeight * 0.35;
+  let best = 0, bestDist = Infinity;
+  cards.forEach((c, i)=>{
+    const d = Math.abs(c.getBoundingClientRect().top - mark);
+    if(d < bestDist){ bestDist = d; best = i; }
+  });
+  return best;
+}
+function goToCard(cards, ix){
+  if(ix < 0){ window.scrollTo({top:0, behavior:'smooth'}); return; }
+  if(ix > cards.length - 1) ix = cards.length - 1;
+  const y = cards[ix].getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.35;
+  window.scrollTo({top: Math.max(0, y), behavior:'smooth'});
+}
+document.getElementById('fn-top').addEventListener('click', ()=>window.scrollTo({top:0, behavior:'smooth'}));
+document.getElementById('fn-next').addEventListener('click', ()=>{
+  const cards = visibleCards(); if(!cards.length) return;
+  goToCard(cards, nearestCardIx(cards) + 1);
+});
+document.getElementById('fn-prev').addEventListener('click', ()=>{
+  const cards = visibleCards(); if(!cards.length) return;
+  goToCard(cards, nearestCardIx(cards) - 1);
+});
+
+// ═══════════════════════════════════════════
+// MANUAL / CHEAT SHEET / COLLECTION
+// ═══════════════════════════════════════════
+function buildManual(){
+  document.getElementById('manual-body').innerHTML =
+    t('manualBody') +
+    '<h4>⚕</h4><p>' + t('disclaimer') + ' ' + t('langNote') + '</p>';
+}
+
+const GOLDEN_RULES = [
+  'Test every smoke alarm and confirm carbon monoxide alarms are fitted near sleeping areas before your first night in a new home',
+  'Locate the main water shutoff, main gas shutoff (if applicable), and electrical breaker panel on move-in day, before an emergency makes it urgent',
+  'Change or rekey exterior locks as soon as you move in, even if the previous occupants seemed trustworthy',
+  'Photograph every room\'s condition on move-in day, before unpacking changes how the space looks',
+  'Anchor tall furniture and appliances to the wall before children explore the new layout',
+  'Install stair gates and window restrictors before, not after, the first time a child is left unsupervised in a new room',
+  'Check for signs of prior water damage, damp, or mould before deciding where to store belongings',
+  'Test GFCI/RCD-equivalent protection near every water source in the home',
+  'Understand the general safety-maintenance split between tenant and landlord responsibilities if renting, and keep records of anything reported',
+  'Build a written emergency contact and shutoff-location sheet and keep it accessible to every household member from day one'
+];
+const KEY_NUMBERS = [
+  ['Smoke alarm standard','meeting recognised standards such as EN 14604 or equivalent, tested on move-in day and monthly after'],
+  ['Carbon monoxide alarm standard','meeting recognised standards such as BS EN 50291 or equivalent, fitted near sleeping areas'],
+  ['Water heater temperature','set at or below approximately 49°C [120°F] at the tap to reduce scald risk while limiting bacterial growth'],
+  ['GFCI/RCD-equivalent protection','present and tested near every water source (kitchen, bathroom, outdoor outlets)'],
+  ['Stair gate installation','fitted at both top and bottom of stairs before children use the space unsupervised'],
+  ['Window fall-prevention','restrictors limiting opening to approximately 10 cm [4 in] on upper floors'],
+  ['Balcony/railing gap spacing','generally no more than approximately 10 cm [4 in] between balusters, per common child-safety guidance'],
+  ['Furniture anchoring','tall or top-heavy furniture and appliances secured to a wall stud with an anti-tip strap or bracket'],
+  ['Radon awareness','test where radon is a known regional concern, following WHO indoor air quality guidance'],
+  ['Emergency exit routes','at least two identified and kept clear from every room'],
+  ['Fire extinguisher access','a working extinguisher accessible on each level of the home'],
+  ['Lock rekeying','exterior locks changed or rekeyed on move-in, regardless of prior occupant'],
+  ['Move-in photographic record','every room photographed and dated within the first day, before unpacking'],
+  ['Utility shutoff locations','main water, gas, and electrical shutoffs located, labeled and recorded on the cheat sheet']
+];
+
+const CONTACTS_KEY = 'safelife-newhome-contacts';
+const DEFAULT_CONTACTS = [
+  ['Emergency services',''],
+  ['Utility provider — electric',''],
+  ['Utility provider — gas',''],
+  ['Utility provider — water',''],
+  ['Landlord / property manager',''],
+  ['Locksmith',''],
+  ['Insurance provider',''],
+  ['Building or neighbourhood contact','']
+];
+let contacts;
+try{
+  const raw = localStorage.getItem(CONTACTS_KEY);
+  contacts = raw ? JSON.parse(raw) : null;
+}catch(e){ contacts = null; }
+if(!contacts || !Array.isArray(contacts.list)) contacts = { list: DEFAULT_CONTACTS.map(c=>c.slice()), notes:'' };
+function saveContacts(){
+  try{ localStorage.setItem(CONTACTS_KEY, JSON.stringify(contacts)); }catch(e){}
+  buildCheatPrint();
+}
+function buildCheat(){
+  const body = document.getElementById('cheat-body');
+  const rules = GOLDEN_RULES.map(r=>'<li>' + r + '</li>').join('');
+  const nums = KEY_NUMBERS.map(n=>'<tr><td><strong>' + n[0] + '</strong></td><td>' + n[1] + '</td></tr>').join('');
+  body.innerHTML =
+    '<h4>📞 ' + t('cheatContacts') + '</h4>' +
+    '<p style="font-size:12px;color:var(--ink-soft);margin-bottom:8px;">' + t('cheatHint') + '</p>' +
+    '<div id="contact-rows"></div>' +
+    '<button class="btn btn-outline" id="add-contact" style="margin:8px 0 4px;">' + t('addContact') + '</button>' +
+    '<h4>⭐ ' + t('rules') + '</h4><ul class="rule-list">' + rules + '</ul>' +
+    '<h4>📏 ' + t('keyNums') + '</h4><table><tr><th>Check</th><th>Safe value / standard</th></tr>' + nums + '</table>' +
+    '<h4>📝 ' + t('myNotes') + '</h4>' +
+    '<textarea id="cheat-notes" placeholder="' + t('notesPh') + '" style="width:100%;min-height:80px;border:1px solid var(--line);border-radius:8px;background:var(--tile);color:var(--ink);padding:10px 12px;font-family:\'Inter\',sans-serif;font-size:13px;resize:vertical;"></textarea>';
+  renderContactRows();
+  const notesEl = document.getElementById('cheat-notes');
+  notesEl.value = contacts.notes || '';
+  notesEl.addEventListener('input', function(){ contacts.notes = this.value; saveContacts(); });
+  document.getElementById('add-contact').addEventListener('click', function(){
+    contacts.list.push(['','']);
+    renderContactRows(); saveContacts();
+    const rows = document.querySelectorAll('#contact-rows .c-name');
+    rows[rows.length-1].focus();
+  });
+  buildCheatPrint();
+}
+function renderContactRows(){
+  const wrap = document.getElementById('contact-rows');
+  if(!wrap) return;
+  wrap.innerHTML = '';
+  const inputCss = 'border:1px solid var(--line);border-radius:8px;background:var(--tile);color:var(--ink);padding:8px 10px;font-family:\'Inter\',sans-serif;font-size:13px;';
+  contacts.list.forEach((c, ix)=>{
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;gap:6px;margin-bottom:6px;align-items:center;';
+    const name = document.createElement('input');
+    name.className = 'c-name'; name.type = 'text'; name.value = c[0];
+    name.placeholder = 'Name / service'; name.style.cssText = inputCss + 'flex:1.4;min-width:0;';
+    const num = document.createElement('input');
+    num.type = 'text'; num.value = c[1];
+    num.placeholder = '+ number'; num.style.cssText = inputCss + 'flex:1;min-width:0;font-weight:700;';
+    const del = document.createElement('button');
+    del.textContent = '✕'; del.title = t('delRow');
+    del.style.cssText = 'border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);border-radius:8px;width:30px;height:34px;cursor:pointer;flex-shrink:0;';
+    name.addEventListener('input', function(){ contacts.list[ix][0] = this.value; saveContacts(); });
+    num.addEventListener('input', function(){ contacts.list[ix][1] = this.value; saveContacts(); });
+    del.addEventListener('click', function(){ contacts.list.splice(ix,1); renderContactRows(); saveContacts(); });
+    row.append(name, num, del);
+    wrap.appendChild(row);
+  });
+}
+function buildCheatPrint(){
+  const esc = s => String(s).replace(/</g,'&lt;');
+  const rules = GOLDEN_RULES.map(r=>'<li>' + r + '</li>').join('');
+  const nums = KEY_NUMBERS.map(n=>'<tr><td><strong>' + n[0] + '</strong></td><td>' + n[1] + '</td></tr>').join('');
+  const filled = contacts.list.filter(c=>c[0] || c[1]);
+  const chips = filled.map(h=>'<div class="cp-chip"><b>' + esc(h[0]||'—') + '</b><span>' + (esc(h[1]) || '____________') + '</span></div>').join('');
+  const activeQR = getSavedQR() || QR_IMAGE;
+  const qr = activeQR
+    ? '<img src="' + activeQR + '" alt="QR">'
+    : '<div class="qr-ph">' + (STORE_URL ? esc(STORE_URL) : 'Your QR<br>code here') + '</div>';
+  document.getElementById('cheat-print').innerHTML =
+    '<div class="cp-card">' +
+      '<div class="cp-head">' + ICONS.newhome +
+        '<div><div class="cp-title">Safe<em>Life</em></div>' +
+        '<div class="cp-sub">' + t('cheatTitle') + ' · ' + t('heroTitle') + '</div></div>' +
+        '<div class="cp-tag">"To all moms by a mom"<br>NEBOSH &amp; OSHA trained HSE professional</div>' +
+      '</div>' +
+      '<div class="cp-contacts">' + chips + '</div>' +
+      '<div class="cp-cols">' +
+        '<div class="cp-rules"><h3>⭐ ' + t('rules') + '</h3><ul>' + rules + '</ul></div>' +
+        '<div class="cp-numsec"><h3>📏 ' + t('keyNums') + '</h3><table>' + nums + '</table></div>' +
+      '</div>' +
+      (contacts.notes ? '<div class="cp-notes"><b>' + t('myNotes') + '</b>' + esc(contacts.notes) + '</div>' : '') +
+      '<div class="cp-foot">' +
+        '<div>Made with care by <b>' + BRAND_NAME + '</b> · SafeLife Collection<br>' + t('disclaimer') + '</div>' +
+        '<div class="cp-qr">' + (STORE_URL ? '<div style="font-size:8px;">' + esc(STORE_URL) + '<br>Scan for the full collection</div>' : '') + qr + '</div>' +
+      '</div>' +
+    '</div>';
+}
+
+// ═══════════════════════════════════════════
+// SELLER: per-product QR code, PIN-protected (each file's own STORE_KEY keeps these separate)
+// ═══════════════════════════════════════════
+const QR_KEY = STORE_KEY + '-qr';
+const QR_PIN_KEY = STORE_KEY + '-qrpin';
+function getSavedQR(){ try{ return localStorage.getItem(QR_KEY) || ''; }catch(e){ return ''; } }
+function sellerRenderLocked(){
+  const hasPin = !!localStorage.getItem(QR_PIN_KEY);
+  document.getElementById('seller-body').innerHTML = hasPin
+    ? '<p>Enter your PIN to manage this file\'s QR code.</p><input type="password" inputmode="numeric" maxlength="12" id="seller-pin-input" placeholder="PIN" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--tile);color:var(--ink);font-size:15px;letter-spacing:2px;margin-bottom:10px;">'
+      + '<div class="modal-actions"><button class="btn btn-primary" id="seller-unlock">Unlock</button></div>'
+    : '<p>No PIN set yet for this file. Create one now — you\'ll need it to change the QR code later. Every product file keeps its own separate PIN and QR code.</p>'
+      + '<input type="password" inputmode="numeric" maxlength="12" id="seller-pin-new" placeholder="Create a PIN" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--tile);color:var(--ink);font-size:15px;letter-spacing:2px;margin-bottom:8px;">'
+      + '<input type="password" inputmode="numeric" maxlength="12" id="seller-pin-confirm" placeholder="Confirm PIN" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--tile);color:var(--ink);font-size:15px;letter-spacing:2px;margin-bottom:10px;">'
+      + '<div class="modal-actions"><button class="btn btn-primary" id="seller-setpin">Set PIN</button></div>';
+  if(hasPin){
+    document.getElementById('seller-unlock').addEventListener('click', function(){
+      const val = document.getElementById('seller-pin-input').value;
+      if(val && val === localStorage.getItem(QR_PIN_KEY)) sellerRenderUnlocked();
+      else alert('Incorrect PIN.');
+    });
+  } else {
+    document.getElementById('seller-setpin').addEventListener('click', function(){
+      const a = document.getElementById('seller-pin-new').value, b = document.getElementById('seller-pin-confirm').value;
+      if(!a || a.length < 4){ alert('Use at least 4 digits.'); return; }
+      if(a !== b){ alert('PINs do not match.'); return; }
+      try{ localStorage.setItem(QR_PIN_KEY, a); }catch(e){}
+      sellerRenderUnlocked();
+    });
+  }
+}
+function sellerRenderUnlocked(){
+  const current = getSavedQR();
+  document.getElementById('seller-body').innerHTML =
+    '<p>Upload this product\'s QR code image. It replaces the placeholder on the printed cheat sheet — saved on this device only, separately for every product file.</p>' +
+    (current ? '<img src="' + current + '" style="width:110px;height:110px;border:1px solid var(--line);border-radius:9px;margin-bottom:10px;object-fit:contain;background:#fff;">' : '') +
+    '<input type="file" accept="image/*" id="seller-qr-file" style="margin-bottom:10px;">' +
+    '<div class="modal-actions">' +
+      '<button class="btn btn-outline" id="seller-remove-qr">Remove QR</button>' +
+      '<button class="btn btn-outline" id="seller-change-pin">Change PIN</button>' +
+      '<button class="btn btn-primary" id="seller-done">Done</button>' +
+    '</div>';
+  document.getElementById('seller-qr-file').addEventListener('change', function(e){
+    const file = e.target.files && e.target.files[0]; if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      try{ localStorage.setItem(QR_KEY, ev.target.result); }catch(e){}
+      buildCheatPrint();
+      sellerRenderUnlocked();
+    };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById('seller-remove-qr').addEventListener('click', function(){
+    try{ localStorage.removeItem(QR_KEY); }catch(e){}
+    buildCheatPrint();
+    sellerRenderUnlocked();
+  });
+  document.getElementById('seller-change-pin').addEventListener('click', function(){
+    try{ localStorage.removeItem(QR_PIN_KEY); }catch(e){}
+    sellerRenderLocked();
+  });
+  document.getElementById('seller-done').addEventListener('click', ()=>closeModal('modal-seller'));
+}
+document.getElementById('btn-seller').addEventListener('click', function(){ sellerRenderLocked(); openModal('modal-seller'); });
+
+const MODULES = [
+  {a:'0–28 Days'},
+  {a:'1–12 Months'},
+  {a:'1–3 Years'},
+  {a:'3–6 Years'},
+  {a:'6–12 Years'},
+  {a:'13–18 Years'},
+  {a:'19–29 Years'},
+  {a:'30–44 Years'},
+  {a:'45–64 Years'},
+  {a:'65–79 Years'},
+  {a:'80–89 Years'},
+  {a:'90+ Years'}
+];
+const MODULE_ICON_IX = [0,0,1,2,3,4,5,6,6,7,7,7];
+const SITUATION_MODULES = [
+  {name:'Pregnancy', sub:'Stage 0', status:'available', emoji:'🤰'},
+  {name:'Postpartum Recovery', sub:'Situation Module', status:'available', emoji:'🌷'},
+  {name:'Grandparent-Proofing', sub:'Situation Module', status:'available', emoji:'👵'},
+  {name:'Autism & Neurodivergent Children', sub:'Situation Module', status:'available', emoji:'♾️'},
+  {name:'Emergency Preparedness', sub:'Situation Module', status:'available', emoji:'🧳'},
+  {name:'Twins & Multiples', sub:'Situation Module', status:'available', emoji:'👯'},
+  {name:'Babysitter/Nanny Handover', sub:'Situation Module', status:'available', emoji:'🗒️'},
+  {name:'Dementia & Alzheimer\'s Care', sub:'Situation Module', status:'available', emoji:'🏠'},
+  {name:'Injury & Post-Surgery Recovery', sub:'Situation Module', status:'available', emoji:'🩹'},
+  {name:'Chronic Conditions Household', sub:'Situation Module', status:'available', emoji:'💊'},
+  {name:'Limited Mobility / Wheelchair', sub:'Situation Module', status:'available', emoji:'♿'},
+  {name:'Visually / Hearing Impaired', sub:'Situation Module', status:'available', emoji:'🦯'},
+  {name:'New Pet + Baby Household', sub:'Situation Module', status:'available', emoji:'🐾'},
+  {name:'The Caregiver\'s Own Safety', sub:'Situation Module', status:'available', emoji:'🛡️'},
+  {name:'New Home Move-In Audit', sub:'Situation Module', status:'current', emoji:'🏡'},
+  {name:'Farm & Rural Household', sub:'Situation Module', status:'available', emoji:'🚜'},
+  {name:'Home Office / WFH', sub:'Situation Module', status:'available', emoji:'💻'}
+];
+function buildSituationGrid(){
+  const grid = document.getElementById('situation-grid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  SITUATION_MODULES.forEach(m=>{
+    const card = document.createElement('div');
+    card.className = 'module-card';
+    const tagClass = m.status === 'coming' ? 'coming' : (m.status === 'current' ? 'owned' : 'addon');
+    const tagLabel = m.status === 'coming' ? 'Coming Soon' : (m.status === 'current' ? '✓ Current Module' : 'Available Separately');
+    card.innerHTML = '<span class="m-emoji">' + m.emoji + '</span><span class="m-name">' + m.name + '</span><span class="m-age">' + m.sub + '</span>' +
+      '<span class="module-tag ' + tagClass + '">' + tagLabel + '</span>';
+    grid.appendChild(card);
+  });
+}
+
+function buildCollection(){
+  const grid = document.getElementById('collection-grid');
+  grid.innerHTML = '';
+  MODULES.forEach((m, mi)=>{
+    const card = document.createElement('div');
+    card.className = 'module-card';
+    const iconIx = MODULE_ICON_IX[mi] != null ? MODULE_ICON_IX[mi] : mi;
+    card.innerHTML = '<span class="m-emoji">' + ICONS.stages[iconIx] + '</span><span class="m-name">' + t('mn'+(mi+1)) + '</span><span class="m-age">' + m.a + '</span>' +
+      '<span class="module-tag ' + (m.owned ? 'owned' : 'addon') + '">' + (m.owned ? t('owned') : t('addon')) + '</span>';
+    grid.appendChild(card);
+  });
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+restore();
+injectIcons();
+document.body.dataset.theme = theme;
+document.body.dataset.mode = mode;
+document.getElementById('btn-mode').textContent = mode === 'light' ? '🌙' : '☀️';
+applyLang();
+fillStats();
+renderAll();
+buildThemeMenu();
+buildLangMenu();
+buildManual();
+buildCheat();
+buildCollection();
+buildSituationGrid();
+</script>
+</body>
+</html>
